@@ -1,0 +1,17 @@
+Fri Sep 11
+Turns out the idea doesn't work as expected. Grouping will obviously
+only work on the columns of the first leafs of the AST. I would
+need to define a recursive function to recurse of the AST branch. Doing
+that I would need pattern matching, which means I could just group
+manually.
+Update: My expectations were slightly off about the basic blocks, however one additional problem with this approach is that leafs of the AST are encapsulated in their regarding data types. I'll won't get around using pattern matching. Doing that tho, returning a basic list of statements won't work either. Since for a conditional for example, I don't only need the statements inside the condition, but also the expressions of the actual if statement.
+
+<p></p>
+Mon Sep 7
+Idea: in order to cut up the source code into block I try to get a list of basic block by looking at the indentation. That will still need some further mangling but it sounds promising.
+
+<p></p>
+Sat Sep 5
+wow due to sickness and new project haven't done anything on my project.
+I've added condition and now facing the problem of splitting up sequences of statements correctly up into blocks. I always wonder if I could do it simply based on the indentation level.
+I'll start of with a quick Monad homework to pattern match and correctly bind sequences of values in order to end up with the right set of labels for each instruction. The condition is tricky, since I need a label at the start and a new one at the next normal instruction *and* then I need an edge between the two.
