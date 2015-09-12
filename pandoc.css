@@ -1,0 +1,9 @@
+#TOC {
+    float: right;
+}
+* {
+    font-family: sans-serif;
+}
+body > p {
+    margin: 0 auto;
+}
