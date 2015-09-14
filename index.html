@@ -15,6 +15,8 @@
 <nav id="TOC">
 <ul>
 <li><a href="#programming-blog">Programming Blog</a><ul>
+<li><a href="#mon-sep-14">Mon Sep 14</a></li>
+<li><a href="#sat-sep-12">Sat Sep 12</a></li>
 <li><a href="#fri-sep-11">Fri Sep 11</a></li>
 <li><a href="#mon-sep-7">Mon Sep 7</a></li>
 <li><a href="#sat-sep-5">Sat Sep 5</a></li>
@@ -54,6 +56,10 @@
 <h1 id="programming-blog">Programming Blog</h1>
 <p>This is my diary on keeping track of my progress to implement a programslicer in Haskell.</p>
 <hr />
+<h2 id="mon-sep-14">Mon Sep 14</h2>
+<p>Started with the NICTA course. <strong>I wonder if you know before you learn something new how much theory you should learn before you apply it?</strong></p>
+<h2 id="sat-sep-12">Sat Sep 12</h2>
+<p>One other item to find out is a functor instance of each AST type. Wouldn’t that mean I should be able to traverse the tree? I never tried the <a href="https://github.com/NICTA/course">NICTA</a>. Maybe I should.</p>
 <h2 id="fri-sep-11">Fri Sep 11</h2>
 <p>Turns out the idea doesn’t work as expected. Grouping will obviously only work on the columns of the first leafs of the AST. I would need to define a recursive function to recurse of the AST branch. Doing that I would need pattern matching, which means I could just group manually. <strong>Update:</strong> My expectations were slightly off about the basic blocks, however one additional problem with this approach is that leafs of the AST are encapsulated in their regarding data types. I’ll won’t get around using pattern matching. Doing that tho, returning a basic list of statements won’t work either. Since for a conditional for example, I don’t only need the statements inside the condition, but also the expressions of the actual if statement. Expressions are different type to statements so that won’t work. Which means creating new datatypes of my basic blocks. Doing that well… I could just use my types in hoopl. That means, I’ll need to go back to the drawing board on how I can create my datatype and make sure there is an edge between the basic blocks of the condition… One problem was, that during instantiation of my conditional type I have not had all the necessary information at hand. I need to re-visit this problem.</p>
 <h2 id="mon-sep-7">Mon Sep 7</h2>
