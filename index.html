@@ -56,7 +56,7 @@
 </ul>
 </nav>
 <h1 id="programming-blog">Programming Blog</h1>
-<p>This is my diary on keeping track of my progress to implement a programslicer in Haskell.</p>
+<p>This is my diary on keeping track of my progress to implement a programslicer in Haskell. Mails go to <code>roman at bromeco.de</code></p>
 <hr />
 <h2 id="tue-sep-21">Tue Sep 21</h2>
 <p>Got a bit further with the help of folks on <a href="https://github.com/bfpg">#bfpg</a>. I’ve a const function which applied to two functors returns the second: <code>fconst _ x = x</code>. Applied this to the first functor and mapped over the second functor: <code>(*&gt;) f g = fconst f &lt;$&gt; g</code> I get the first result. The tricky thing is that it doesn’t map over the entire first functor which it should be: <code>(*&gt;) :: Apply f =&gt; f a -&gt; f b -&gt; f b</code> <strong>Update</strong>: Yay!!! Found the solution. The type of my applied <code>fconst</code> function was: <code>t -&gt; f b -&gt; f b</code> so I thought, I need something which uses the given <code>f a</code> (btw. in ghci type: ghci&gt; <code>:type \f g -&gt; fconst f &lt;$&gt; b</code> to check the type). Anyway.. scrolling up I recognized the type signatures of the <code>lift</code> functions. They take a function and create functors out of the parameters. So having a function <code>fconst</code> I thought why not:</p>
