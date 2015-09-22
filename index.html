@@ -15,6 +15,8 @@
 <nav id="TOC">
 <ul>
 <li><a href="#programming-blog">Programming Blog</a><ul>
+<li><a href="#tue-sep-21">Tue Sep 21</a></li>
+<li><a href="#mon-sep-21">Mon Sep 21</a></li>
 <li><a href="#mon-sep-14">Mon Sep 14</a></li>
 <li><a href="#sat-sep-12">Sat Sep 12</a></li>
 <li><a href="#fri-sep-11">Fri Sep 11</a></li>
@@ -56,6 +58,10 @@
 <h1 id="programming-blog">Programming Blog</h1>
 <p>This is my diary on keeping track of my progress to implement a programslicer in Haskell.</p>
 <hr />
+<h2 id="tue-sep-21">Tue Sep 21</h2>
+<p>Got a bit further with the help of folks on <a href="https://github.com/bfpg">#bfpg</a>. I’ve a const function which applied to two functors returns the second: <code>fconst _ x = x</code>. Applied this to the first functor and mapped over the second functor: <code>(*&gt;) f g = fconst f &lt;$&gt; g</code> I get the first result. The tricky thing is that it doesn’t map over the entire first functor which it should be: <code>(*&gt;) :: Apply f =&gt; f a -&gt; f b -&gt; f b</code></p>
+<h2 id="mon-sep-21">Mon Sep 21</h2>
+<p>Made some great progress on the course. Got stuck now and then but help from Fraser Tweedale to get back on the moving tracks. Now I’m stuck again, although I feel the solution to be really simple. I’m implementing Apply for a sequence, discaring the value of the first argument, basically <code>*&gt;</code>. So the function takes two Functors (<code>f a</code> and an <code>f b</code>). It returns the values of the second functor applied to the first, discarding the values of the first. Just doing <code>(*&gt;) _ g = id g</code> produces the first mapping - Hurry. Now I need to map over the given (first) Functor <code>f</code> to produce a sequence of values from the functor b. Hmm…</p>
 <h2 id="mon-sep-14">Mon Sep 14</h2>
 <p>Started with the NICTA course. <strong>I wonder if you know before you learn something new how much theory you should learn before you apply it?</strong></p>
 <h2 id="sat-sep-12">Sat Sep 12</h2>
