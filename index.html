@@ -67,6 +67,10 @@
 <p><strong>Update</strong>: Found it. Got a hint from Tony Morris on #bfpg. Essentially what it came down to is to take the <code>t</code> out of the second function and proceed from there. How do I take out a parameter from a given function. I had to go back to basics. <a href="http://stackoverflow.com/questions/2801786/pattern-matching-for-lambda-expressions">This</a> stack overflow question helped me to understand, especially this part:</p>
 <pre><code>(Remember that f a b = ... is basically a shortcut for f a = \b -&gt;
 ... which is a shortcut for f = \a -&gt; \b -&gt; ....)</code></pre>
+<p>My mental model always thought of functions as something like a callable, e.g.</p>
+<pre><code>def foobar(callable):
+    callable(a, b, c)</code></pre>
+<p>but there is a reason why people emphasize that functions always take <em>one</em> parameter.</p>
 <h2 id="sat-sep-26">Sat Sep 26</h2>
 <p>Working on the Applicative function <code>replicateA</code> brought back memories. I tried to use <code>replicate</code> out of the Prelude but couldn’t get it to work. I doubted the ability to use the function at all, since it used general quantified types <code>a</code> and not functors <code>f a</code>. But turns out it can be used. And of course. If it would have not been the case it would have almost rendered the functional programming language unusable if you need to implement almost the same function for different types.</p>
 <h2 id="tue-sep-21">Tue Sep 21</h2>
