@@ -15,6 +15,8 @@
 <nav id="TOC">
 <ul>
 <li><a href="#programming-blog">Programming Blog</a><ul>
+<li><a href="#tue-oct-06">Tue Oct 06</a></li>
+<li><a href="#sat-sep-26">Sat Sep 26</a></li>
 <li><a href="#tue-sep-21">Tue Sep 21</a></li>
 <li><a href="#mon-sep-21">Mon Sep 21</a></li>
 <li><a href="#mon-sep-14">Mon Sep 14</a></li>
@@ -56,10 +58,20 @@
 </ul>
 </nav>
 <h1 id="programming-blog">Programming Blog</h1>
-<p>This is my diary on keeping track of my progress to implement a programslicer in Haskell. Mails go to <code>roman at bromeco.de</code></p>
+<p>This is my diary on keeping track of my progress to implement a programslicer in Haskell. Mails go to <code>roman at bromeco.de</code>.</p>
 <hr />
+<h2 id="tue-oct-06">Tue Oct 06</h2>
+<p>Progressed and now stuck at <a href="https://github.com/NICTA/course/blob/ee8d1a294137c157c13740ac99a23a5dd5870b4a/src/Course/Bind.hs#L116">Bind.hs</a>. Using type holes I got a solution:</p>
+<pre><code>(=&lt;&lt;) f g = flip f &lt;*&gt; g</code></pre>
+<p>Unfortunately it ends up in an infinite recursion :(</p>
+<p><strong>Update</strong>: Found it. Got a hint from Tony Morris on #bfpg. Essentially what it came down to is to take the <code>t</code> out of the second function and proceed from there. How do I take out a parameter from a given function. I had to go back to basics. <a href="http://stackoverflow.com/questions/2801786/pattern-matching-for-lambda-expressions">This</a> stack overflow question helped me to understand, especially this part:</p>
+<pre><code>(Remember that f a b = ... is basically a shortcut for f a = \b -&gt;
+... which is a shortcut for f = \a -&gt; \b -&gt; ....)</code></pre>
+<h2 id="sat-sep-26">Sat Sep 26</h2>
+<p>Working on the Applicative function <code>replicateA</code> brought back memories. I tried to use <code>replicate</code> out of the Prelude but couldn’t get it to work. I doubted the ability to use the function at all, since it used general quantified types <code>a</code> and not functors <code>f a</code>. But turns out it can be used. And of course. If it would have not been the case it would have almost rendered the functional programming language unusable if you need to implement almost the same function for different types.</p>
 <h2 id="tue-sep-21">Tue Sep 21</h2>
-<p>Got a bit further with the help of folks on <a href="https://github.com/bfpg">#bfpg</a>. I’ve a const function which applied to two functors returns the second: <code>fconst _ x = x</code>. Applied this to the first functor and mapped over the second functor: <code>(*&gt;) f g = fconst f &lt;$&gt; g</code> I get the first result. The tricky thing is that it doesn’t map over the entire first functor which it should be: <code>(*&gt;) :: Apply f =&gt; f a -&gt; f b -&gt; f b</code> <strong>Update</strong>: Yay!!! Found the solution. The type of my applied <code>fconst</code> function was: <code>t -&gt; f b -&gt; f b</code> so I thought, I need something which uses the given <code>f a</code> (btw. in ghci type: ghci&gt; <code>:type \f g -&gt; fconst f &lt;$&gt; b</code> to check the type). Anyway.. scrolling up I recognized the type signatures of the <code>lift</code> functions. They take a function and create functors out of the parameters. So having a function <code>fconst</code> I thought why not:</p>
+<p>Got a bit further with the help of folks on <a href="https://github.com/bfpg">#bfpg</a>. I’ve a const function which applied to two functors returns the second: <code>fconst _ x = x</code>. Applied this to the first functor and mapped over the second functor: <code>(*&gt;) f g = fconst f &lt;$&gt; g</code> I get the first result. The tricky thing is that it doesn’t map over the entire first functor which it should be: <code>(*&gt;) :: Apply f =&gt; f a -&gt; f b -&gt; f b</code></p>
+<p><strong>Update</strong>: Yay!!! Found the solution. The type of my applied <code>fconst</code> function was: <code>t -&gt; f b -&gt; f b</code> so I thought, I need something which uses the given <code>f a</code> (btw. in ghci type: ghci&gt; <code>:type \f g -&gt; fconst f &lt;$&gt; b</code> to check the type). Anyway.. scrolling up I recognized the type signatures of the <code>lift</code> functions. They take a function and create functors out of the parameters. So having a function <code>fconst</code> I thought why not:</p>
 <pre><code>(*&gt;) f g = lift2 fconst f g
     where fconst _ x = x</code></pre>
 <p>and boom it worked! A nicer way however is to turn it into:</p>
