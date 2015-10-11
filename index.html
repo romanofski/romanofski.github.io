@@ -15,6 +15,7 @@
 <nav id="TOC">
 <ul>
 <li><a href="#programming-blog">Programming Blog</a><ul>
+<li><a href="#mon-oct-12">Mon Oct 12</a></li>
 <li><a href="#tue-oct-06">Tue Oct 06</a></li>
 <li><a href="#sat-sep-26">Sat Sep 26</a></li>
 <li><a href="#tue-sep-21">Tue Sep 21</a></li>
@@ -60,6 +61,8 @@
 <h1 id="programming-blog">Programming Blog</h1>
 <p>This is my diary on keeping track of my progress to implement a programslicer in Haskell. Mails go to <code>roman at bromeco.de</code>.</p>
 <hr />
+<h2 id="mon-oct-12">Mon Oct 12</h2>
+<p>Stuck at implementing <code>fmap</code> for <a href="https://github.com/NICTA/course/blob/master/src/Course/State.hs#L42">State.hs</a>. My mental model is centred around the fact to apply the given function <code>(a -&gt; b)</code> on a concrete value, but any attempt to isolate that value <code>a</code> fails. Reading <a href="http://brandon.si/code/the-state-monad-a-tutorial-for-the-confused/">this article</a> makes me wonder if function composition is making more sense here …</p>
 <h2 id="tue-oct-06">Tue Oct 06</h2>
 <p>Progressed and now stuck at <a href="https://github.com/NICTA/course/blob/ee8d1a294137c157c13740ac99a23a5dd5870b4a/src/Course/Bind.hs#L116">Bind.hs</a>. Using type holes I got a solution:</p>
 <pre><code>(=&lt;&lt;) f g = flip f &lt;*&gt; g</code></pre>
