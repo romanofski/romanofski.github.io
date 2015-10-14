@@ -73,6 +73,13 @@
 <p>leaves us with a compiler error: <code>Couldn't match type 'b' with '(b, s)'</code>. Using a type hole in front of the <code>fx</code> tells us we need a function:</p>
 <pre><code>foo :: (a -&gt; b) -&gt; (a, s) -&gt; (b, s)</code></pre>
 <p>which makes the implementation way more straight forward. Apparently thats exactly what <a href="http://hackage.haskell.org/package/base-4.8.1.0/docs/Control-Arrow.html#v:first">first</a> from <code>Control.Arrow</code> provides.</p>
+<p><strong>Update:</strong> I meant <a href="http://hackage.haskell.org/package/base-4.8.1.0/docs/Data-Bifunctor.html#v:first">first from Data.Bifunctor</a> not <code>Control.Arrow</code>. Thanks to Fraser Tweedale, I got the “unwrapped” function right, but struggled putting it all back together with in:</p>
+<pre><code>instance Functor (State s) where
+  (&lt;$&gt;) ::
+      (a -&gt; b)
+      -&gt; State s a
+      -&gt; State s b</code></pre>
+<p>Turned out that I had <strong>just a “spelling mistake” referring to the wrong bound variable</strong> in my function.</p>
 <h2 id="tue-oct-06">Tue Oct 06</h2>
 <p>Progressed and now stuck at <a href="https://github.com/NICTA/course/blob/ee8d1a294137c157c13740ac99a23a5dd5870b4a/src/Course/Bind.hs#L116">Bind.hs</a>. Using type holes I got a solution:</p>
 <pre><code>(=&lt;&lt;) f g = flip f &lt;*&gt; g</code></pre>
