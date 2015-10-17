@@ -64,6 +64,7 @@
 <hr />
 <h2 id="sat-oct-17">Sat Oct 17</h2>
 <p>Had some good progress on State. I’m currently struggling with implementing the bind function <code>=&lt;&lt;</code>, but found this wonderful <a href="https://www.fpcomplete.com/school/starting-with-haskell/basics-of-haskell/12-State-Monad">article on fpcomplete</a> I’m currently studying.</p>
+<p><strong>Update:</strong> It verks. The best take away of the article for me was this: &gt; When you execute a lambda, you simply replace it with its body and &gt; replace the formal parameter with the actual argument.</p>
 <h2 id="mon-oct-12">Mon Oct 12</h2>
 <p>Stuck at implementing <code>fmap</code> for <a href="https://github.com/NICTA/course/blob/master/src/Course/State.hs#L42">State.hs</a>. My mental model is centred around the fact to apply the given function <code>(a -&gt; b)</code> on a concrete value, but any attempt to isolate that value <code>a</code> fails. Reading <a href="http://brandon.si/code/the-state-monad-a-tutorial-for-the-confused/">this article</a> makes me wonder if function composition is making more sense here …</p>
 <p><strong>Update:</strong> Got a bit further with a bit of help from #bfpg. I’ve removed the State <em>wrapper</em> and tried to implement:</p>
