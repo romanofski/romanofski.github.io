@@ -15,6 +15,7 @@
 <nav id="TOC">
 <ul>
 <li><a href="#programming-blog">Programming Blog</a><ul>
+<li><a href="#sat-oct-17">Sat Oct 17</a></li>
 <li><a href="#mon-oct-12">Mon Oct 12</a></li>
 <li><a href="#tue-oct-06">Tue Oct 06</a></li>
 <li><a href="#sat-sep-26">Sat Sep 26</a></li>
@@ -61,6 +62,8 @@
 <h1 id="programming-blog">Programming Blog</h1>
 <p>This is my diary on keeping track of my progress to implement a programslicer in Haskell. Mails go to <code>roman at bromeco.de</code>.</p>
 <hr />
+<h2 id="sat-oct-17">Sat Oct 17</h2>
+<p>Had some good progress on State. I’m currently struggling with implementing the bind function <code>=&lt;&lt;</code>, but found this wonderful <a href="https://www.fpcomplete.com/school/starting-with-haskell/basics-of-haskell/12-State-Monad">article on fpcomplete</a> I’m currently studying.</p>
 <h2 id="mon-oct-12">Mon Oct 12</h2>
 <p>Stuck at implementing <code>fmap</code> for <a href="https://github.com/NICTA/course/blob/master/src/Course/State.hs#L42">State.hs</a>. My mental model is centred around the fact to apply the given function <code>(a -&gt; b)</code> on a concrete value, but any attempt to isolate that value <code>a</code> fails. Reading <a href="http://brandon.si/code/the-state-monad-a-tutorial-for-the-confused/">this article</a> makes me wonder if function composition is making more sense here …</p>
 <p><strong>Update:</strong> Got a bit further with a bit of help from #bfpg. I’ve removed the State <em>wrapper</em> and tried to implement:</p>
