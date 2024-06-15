@@ -1,0 +1,21 @@
+---
+title: "z3c.autoinclude does not automatically include a plone package"
+tags: 
+- Plone
+---
+
+Something I stumbled over just recently and is a <a href="http://en.wikipedia.org/wiki/Pebkac#Acronyms_and_other_names_for_a_user_error">PEBKAC</a> again. What happens if you create a <a href="http://collective-docs.readthedocs.org/en/latest/buildout/creatingpackage.html">plone package</a> and you always need to explicitly specify the zcml slot for that package? Check the namespace declaration in the setup.py. That means, what I had configured:
+<pre> namespace_packages=['mooball'],
+ entry_points="""
+ # -*- Entry points: -*-
+ [z3c.autoinclude.plugin]
+ target = plone
+ """,</pre>
+But the packages layout was "mooball.portlets.latestcontent". After digging, I found out that simply the <strong>namespace_package is incorrectly declared</strong>. Changing it to:
+<pre> namespace_packages=['mooball', 'mooball.portlets'],
+ entry_points="""
+ # -*- Entry points: -*-
+ [z3c.autoinclude.plugin]
+ target = plone
+ """,</pre>
+... got it correctly included via z3c.autoinclude.

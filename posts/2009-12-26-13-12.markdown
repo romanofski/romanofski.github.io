@@ -1,0 +1,19 @@
+---
+title: "Input Methods in Ubuntu Karmic Koala"
+tags: 
+- dead keys
+- keyboard
+- mutt
+- scim
+- screen
+- terminal
+- Ubuntu
+---
+
+I recently upgraded to <a href="http://www.ubuntu.com">Ubuntu Karmic Koala</a>. The only glitch I was stumbling over quite often, was a problem in my terminal. It allowed me to type in a few characters before the cursor continues. A bit like the <a href="http://vimdoc.sourceforge.net/htmldoc/digraph.html">digraph mode in vim</a> to enter special characters.
+
+[caption id="attachment_190" align="aligncenter" width="318" caption="SCIM Triggered"]<a href="http://romanofskiat.wordpress.com/wp-content/uploads/2009/12/scimtriggered.png"><img class="size-full wp-image-190" title="scimtriggered" src="http://romanofskiat.wordpress.com/wp-content/uploads/2009/12/scimtriggered.png" alt="SCIM Triggered" width="318" height="106" /></a>[/caption]
+
+Now I accidentally stumbled over the <a href="https://help.ubuntu.com/community/SCIM">Smart Common Input Method Platform (SCIM) Setup</a>. <strong>The default hotkey is 'CTRL+Space'</strong>, the hotkey I'm using for switching windows in <a href="http://www.gnu.org/software/screen/">screen</a> is 'CTRL+A+Space'. In case I slipped a bit I triggered the default input method, which terrorised my programming hours. You can't move in <a href="http://vim.sf.net">vim</a> any more, you can't navigate in <a href="http://www.mutt.org/">mutt</a> anymore you can't even hardly navigate in your file-system, because every key-press is swallowed by the default input methods. WTF?
+
+Don't get me wrong. The problem is not the input methods setup here, it's just that there is now way of figuring out what is triggering the different input methods. If you need to<strong> tweak or change the default hotkey</strong>, you can find the setup program for SCIM under '<em>System/Preferences/SCIM Input Method Setup</em>'.

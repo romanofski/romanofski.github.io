@@ -1,0 +1,42 @@
+---
+title: "Best practices for diffing two online MySQL databases"
+tags: 
+---
+
+We've had to move our internal Red Hat Beaker instance to a new MySQL database version. We made the jump with a 5min downtime of Beaker. One of the items we wanted to make sure is to not to loose any data.
+<h2>Setup and Motivation</h2>
+A database dump is about 135 GB compressed with gzip. The main database was being served by a MySQL 5.1 master/slave setup.
+
+We discussed two possible strategies for switching to MariaDB. Either a dump and load which meant a downtime of 16h, or the use of an additional MariaDB slave which will be promoted to the new master. We chose the latter: a new MariaDB 10.2 slave promoted to be the new master.
+
+We wanted to make sure that both slaves, the MySQL 5.1 and new MariaDB 10.2, were in sync and with promoting the MariaDB 10.2 slave to master we would not loose any data. To verify data consistency across the slaves, we diffed both databases.
+<h2>Diffing</h2>
+I went through a few iterations of dumping and diffing. Here are the items, which worked best.
+<h3>Ignore mysql-utils if you only have read access</h3>
+MySQL comes with a bunch of utilities and one of them is a tool to compare two databases, called <a href="https://github.com/mysql/mysql-utilities" target="_blank" rel="noopener">mysqldbcompare</a> and mysqldiff. I've tried mysqldiff first, but, after studying the source code, decided against using it. Reason being is that you will have to grant it additional write privileges to the databases which are arguably small, but still too much I was comfortable with.
+<h3>Use the "at" utility to schedule mysqldump</h3>
+The best way I found to kick off performing the database dumps at the same time is to use <strong><a href="https://en.wikipedia.org/wiki/At_(command)">at</a>. </strong>Scheduling a mysqldump manually for the two databases introduces way too much noisy differences. I guess, it goes without mention, that the database hosts clocks are synchronized (e.g. by the use of chronyd).
+<h3>Dump the entire database at once</h3>
+The mysqldump tool can dump each table separately, but that is not what you want. Also the default options which are geared towards a dump and load is not what you want.
+
+Instead I dumped MySQL with:
+<pre class="code-java">mysqldump --single-transaction --order-by-primary --skip-extended-insert beaker | gzip &gt; mysql.sql.gz;</pre>
+while for MariaDB I used:
+<pre class="code-java">mysqldump --order-by-primary --skip-extended-insert beaker | gzip &gt; mariadb.sql.gz;</pre>
+The options used are aiding the later diff:
+<ul>
+	<li>--order-by-primary orders every dumped table row consistently by their primary keys</li>
+	<li>--single-transaction keeps a transaction open until the dump has finished so you get a comparable database snapshot across the two databases for the same starting point</li>
+	<li>--skip-extended-inserts is used to have an INSERT statement for each row, otherwise they're collapsed to multi-row insert statements which are harder to compare</li>
+</ul>
+<h3>Compression (GZip) and shell pipes are your friend</h3>
+With big databases, like the Beaker production database, you want to avoid writing anything uncompressed. Linux ships additional gzip wrappers for cat (zcat), less (zless) and so on, which will help with creating shell pipes in order to process the data.
+<h3>Cut up the dump</h3>
+Once you have both database dumps, cut them up into their separate tables. Purpose of this is not to sift through the dumps with your own eye, but rather to cater for diff. The diff tool loads the entire file into memory and you will face, with large database dumps, it is running out of memory quickly:
+<pre class="code-java">diff mysql-beaker.sql.gz mariadb-replica-beaker.sql.gz
+diff: memory exhausted</pre>
+While I did found a tool to diff <a href="https://news.ycombinator.com/item?id=13985216">both large files</a>, having a unified diff output is easier to compare data with.
+
+<strong>Example:</strong> Using gzip and a pipe from my point above:
+<pre class="code-java">diff -u &lt;(zcat mysql/table1.sql.gz) &lt;(zcat mariadb/table1.sql.gz) &gt; diffed/table1.diff</pre>
+Now you can use your SHELL <em>foo</em> to loop over all cut up tables and write the diff into a separate folder which then lets you easily compare.

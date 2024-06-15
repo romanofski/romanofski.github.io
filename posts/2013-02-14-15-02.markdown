@@ -1,0 +1,20 @@
+---
+title: "GIMP plug-in debugging"
+tags: 
+- metadata browser
+---
+
+I'm working now and then on the <a href="http://git.gnome.org/browse/gimp/log/?h=metadata-browser">metadata browser for GIMP</a>. This now and then can mean a serious gap where I don't have time to contribute, which means I forget most of the commands for debugging.
+
+The whole debugging story for plug-ins is very well documented in <a href="http://git.gnome.org/browse/gimp/tree/devel-docs/debug-plug-ins.txt">debug-plug-ins.txt</a>. A quick debugging session goes like this:
+
+Start GIMP with an environment variable which is set to the plugin name. After GIMP starts up and calls your plug-in, it stops and waits for the debugger:
+<pre>GIMP_PLUGIN_DEBUG=metadata,run ~/gimpdev/bin/gimp-2.9 /tmp/hintergrund.jpg
+This is a development version of GIMP.  Debug messages may appear here.
+jpeg-load: found EXIF block (7686 bytes)</pre>
+One thing I stumbled over today <strong>was the missing PID output (last line)</strong>. <a href="http://www.ohloh.net/accounts/mitch">Mitch mitchus</a> figured out the problem. Depending on your version of libglib, you need to provide another environment variable since the logging handler changed:
+<pre>G_MESSAGES_DEBUG=LibGimp GIMP_PLUGIN_DEBUG=metadata,run ~/gimpdev/bin/gimp-2.9 /tmp/hintergrund.jpg
+This is a development version of GIMP.  Debug messages may appear here.
+jpeg-load: found EXIF block (7686 bytes)
+(metadata:14783): LibGimp-DEBUG: Waiting for debugger...</pre>
+Now you can use the gdb to attach to the running process (14783) and debug it.

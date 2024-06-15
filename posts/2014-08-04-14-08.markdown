@@ -1,0 +1,26 @@
+---
+title: "Common docker pitfalls"
+tags: 
+- deployment
+- hacking
+- linux
+---
+
+I've ran into a few problems with <a href="https://www.docker.com/">docker</a> I'd like to document myself and how to solve them.
+<h3>Overwriting an entrypoint</h3>
+If you've configured a script as an entrypoint which fails, you can run the docker image with a shell in order to fiddle with the script (instead of continously rebuilding the image):
+<pre>#--entrypoint (provides a new entry point which is the nominated shell)
+docker run -i --entrypoint='/bin/bash'  -t f5d4a4d6a8eb</pre>
+Possible errors you face otherwise are these:
+<pre>/bin/bash: /bin/bash: cannot execute binary file</pre>
+<h3>Weird errors when building the image</h3>
+I've ran into this a few times. Errors like:
+<pre id="comment_text_0" class="bz_comment_text                  bz_wrap_comment_text">Error in PREIN scriptlet in rpm package libvirt-daemon-0.9.11.4-3.fc17.x86_64
+or
+useradd: failure while writing changes to /etc/passwd
+</pre>
+If you've set <a href="https://en.wikipedia.org/wiki/SELinux">SELinux </a>to enforcing, you may want to temporarily disable SELinux for just building the image. <strong>Don't disable SELinux permanently.</strong>
+<h3>Old (base) image</h3>
+Check if your base image has changed (e.g. docker images) and pull it again (docker pull &lt;image&gt;)
+
+<a title="hamburg001 by Roman Joost, on Flickr" href="https://www.flickr.com/photos/romanofski/415533925"><img class="aligncenter" src="https://farm1.staticflickr.com/177/415533925_af9fd8c376_m.jpg" alt="hamburg001" width="161" height="240" /></a>

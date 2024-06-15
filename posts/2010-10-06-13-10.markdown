@@ -1,0 +1,27 @@
+---
+title: "Debugging Byobu"
+tags: 
+- byobu
+- hacking
+- linux
+- screen
+---
+
+Ubuntu ships with a neat GNU screen <a href="https://launchpad.net/byobu" target="_self">enhancement called byobu</a>. One of the nice features is to run custom scripts. The output of your custom byobu scripts are shown in the status line of your byobu session.
+<p style="text-align:center;"></p>
+
+
+[caption id="attachment_269" align="aligncenter" width="454" caption="Byobu runs custom commands"]<a href="http://romanofskiat.wordpress.com/wp-content/uploads/2010/10/byobu.png"><img class="size-full wp-image-269 " title="byobu" src="http://romanofskiat.wordpress.com/wp-content/uploads/2010/10/byobu.png" alt="" width="454" height="38" /></a>[/caption]
+
+I've converted my <a href="http://romanofskiat.wordpress.com/2008/12/20/displaying-usefull-information-in-your-gnu-screen/">former screen script</a> to run as a custom script in byobu, but it suddenly stopped working. I was wondering why and found a way to see what the problem was.
+<h3>What you need</h3>
+My script scans my mail directory and checks for new mail. I placed it in my home directory under:
+<pre>$ ls /home/roman/.byobu/bin
+3_maildircheck</pre>
+<h3>Debugging</h3>
+The following points should give you a clue why your custom script won't work with byobu:
+<ol>
+	<li>Check if you have enabled custom scripts in byobu (press F9 in a byobu session).</li>
+	<li>Run the custom command by itself <strong>from the plugins directory, not from your home directory</strong>. The plugins directory is located under Ubuntu in /usr/lib/byobu/custom.</li>
+	<li>The output of custom scripts are written to a cache file under /var/run/screen. Check what the cache files tell you.</li>
+</ol>

@@ -1,0 +1,77 @@
+---
+title: "git: Moving partial changes between commits"
+tags: 
+- git
+- hacking
+---
+
+Now and then I face the fact that I've added changes to a commit I'd like to have moved into a different commit. Here is what you do:
+<h6>What's there</h6>
+We have two commits. For illustration purposes I've trimmed the log output down:
+
+<pre>
+$ git log --stat
+commit 19c698a9ee91a5f03f1c3240fc957e6b328931f5
+
+    WIP: adding tests
+
+ parts/tests/functional/conftest.py       |  4 ++--
+ parts/tests/functional/test_frobfrob.py  | 43 ++++++++++
+ frobfrob.py                              | 14 +++++++++++++-
+
+commit c7ef6c3014ca9d049dea46fbed44010acf53ae79
+
+    prepare frob frob schemas
+
+ parts/tests/functional/conftest.py           | 31 +++++++++++++
+ frobfrob/models.py                           | 32 +++++++++++++
+
+commit 5b30d351f51fda40d37d2f7dc25d2367bd37845a
+[...]
+</pre>
+Now I want to move the changes made to <code>conftest.py</code> from commit <code>c7ef6c3014ca9d049dea46fbed44010acf53ae79</code> into commit <code>19c698a9ee91a5f03f1c3240fc957e6b328931f5</code> (or HEAD).
+
+<h6>Pluck out the commit</h6>
+In order to pluck out the changes to <code>conftest.py</code>, we'll reset the file against the previous commit <code>5b30d351f51fda40d37d2f7dc25d2367bd37845a</code> (you could also use HEAD~3).
+
+<pre>
+$ git reset 5b30d351f51fda40d37d2f7dc25d2367bd37845a parts/tests/functional/conftest.py
+Unstaged changes after reset:
+M       parts/tests/functional/conftest.py
+
+$ git status -s
+MM parts/tests/functional/conftest.py
+</pre>
+As you can see, we will have staged changes and unstaged changes. The staged changes remove the additions to the <code>conftest.py</code> file and the unstaged changes add our code to <code>conftest.py</code>
+
+<h6>Remove and Add</h6>
+We now create two commits:
+<ol>
+<li>Use the staged changes for a new commit which we'll squash with <code>c7ef6c3014ca9d049dea46fbed44010acf53ae79</code>.</li>
+<li>Stage the unstaged changes and create another commit which we'll squash with <code>19c698a9ee91a5f03f1c3240fc957e6b328931f5</code> or <code>HEAD</code>.</li>
+</ol>
+
+<pre>
+# 1. commit Message is something like: squash: removes changes to conftest.py
+$ git commit
+
+# 2. commit
+# stage changes
+$ git add -p
+
+# commit, message will be something like: squash: adds changes to conftest.py
+$ git commit
+
+# we end up with two additional commits
+$ git log --oneline
+492ff22 Adds changes to conftest
+8485946 removes conftest files
+19c698a WIP: adding tests
+c7ef6c3 prepare frob frob schemas
+</pre>
+
+<h6>Interactive rebase put's it all together</h6>
+Now use an <a href="http://git-scm.com/book/en/v2/Git-Tools-Rewriting-History" title="Rewriting History">interactive rebase</a> to squash the changes with the right commits:
+<pre>
+$ git rebase -i HEAD~5
+</pre>

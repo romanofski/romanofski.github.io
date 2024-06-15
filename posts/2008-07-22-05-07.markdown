@@ -1,0 +1,20 @@
+---
+title: "GIMP Manual Build Architecture Status"
+tags: 
+- docbook
+- gettext
+- gimp-help-2
+- make
+- manual
+- xsltproc
+---
+
+[caption id="attachment_24" align="alignleft" width="300" caption="GIMP Help Browser using webkit."]<a href="http://romanofskiat.wordpress.com/wp-content/uploads/2008/07/helpbrowser.png"><img class="size-medium wp-image-24" src="http://romanofskiat.wordpress.com/wp-content/uploads/2008/07/helpbrowser.png?w=300" alt="GIMP Help Browser using webkit." width="300" height="207" /></a>[/caption]
+
+We're currently in a huge overhaul of the build system the GIMP Manual is using (see <a href="http://romanofskiat.wordpress.com/2008/07/06/gimp-manual-future-decisions/" target="_self">my last post</a>).
+
+Ulf D. Ehlert works on a custom Makefile, which can extract the strings, creates automatically pot files, as well as po files and is able to create localized DocBook/XML. He's still working hard to improve the script. Thanks to publican - it helped to reuse some of the Makefile code the project provides to create pot and po files automatically (I still need to communicate that with the publican folks - sorry guys).
+
+I hope we can merge his changes as soon as possible with a current <a href="http://svn.gnome.org/viewvc/gimp-help-2/branches/xml2po-support/" target="_self">xml2po branch</a> to test it. Hopefully other developers around will help to improve the Makefile.
+
+We've still performance issues. Creating the HTML pages for the translations takes ages, and it will take more when we switch to support gettext.

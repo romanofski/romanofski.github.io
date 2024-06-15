@@ -1,0 +1,34 @@
+---
+title: "Plone ConfigurationError hides missing configuration files"
+tags: 
+- buildout
+- Plone
+---
+
+This one is a quicky. If you run into the following error:
+<pre><code>
+    raise ConfigurationError("Unknown directive", ns, n)
+zope.configuration.xmlconfig.ZopeXMLConfigurationError: File "/opt/works/projects/plone4/apf.buildout/parts/instance/etc/site.zcml", line 16.2-16.23
+ZopeXMLConfigurationError: File "/home/roman/.buildout/eggs/Products.CMFPlone-4.1-py2.6.egg/Products/CMFPlone/configure.zcml", line 99.4-103.10
+ZopeXMLConfigurationError: File "/home/roman/.buildout/eggs/plone.app.dexterity-1.0.3-py2.6.egg/plone/app/dexterity/configure.zcml", line 16.4-16.52
+ZopeXMLConfigurationError: File "/home/roman/.buildout/eggs/plone.directives.dexterity-1.0.2-py2.6.egg/plone/directives/dexterity/configure.zcml", line 3.4-3.35
+ZopeXMLConfigurationError: File "/home/roman/.buildout/eggs/five.grok-1.2.0-py2.6.egg/five/grok/configure.zcml", line 15.2-15.40
+ZopeXMLConfigurationError: File "/home/roman/.buildout/eggs/grokcore.viewlet-1.8-py2.6.egg/grokcore/viewlet/configure.zcml", line 7.2-7.44
+ZopeXMLConfigurationError: File "/home/roman/.buildout/eggs/zope.contentprovider-3.7.2-py2.6.egg/zope/contentprovider/configure.zcml", line 12.4
+ConfigurationError: ('Unknown directive', u'http://namespaces.zope.org/tales', u'expressiontype')
+</code></pre>
+
+... and you are using plone.app.theming and dexterity you will want to
+check your buildout configuration file.
+Make sure you have the dependent configuration files included:
+
+<pre>
+<code>
+extends =
+    http://dist.plone.org/release/4.1/versions.cfg
+    http://good-py.appspot.com/release/dexterity/1.0
+    http://good-py.appspot.com/release/plone.app.theming/1.0b8
+</code>
+</pre>
+
+The above configurations can change with future plone releases.

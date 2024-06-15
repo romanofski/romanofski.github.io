@@ -1,0 +1,19 @@
+---
+title: "A plan for spam, perhaps?"
+tags: 
+- python
+- spam
+- tmda
+---
+
+<img class="alignright" style="float:right;" src="http://farm1.static.flickr.com/82/262091025_9825a64b68_m.jpg" alt="by david trattnig" width="240" height="180" />I'm currently trying the <a href="http://tmda.net/">Tagged Message Delivery Agent (TMDA) (Homepage).
+</a>Thanks to <a href="http://www.ikom-online.de/" target="_self">Markus Leist</a>!
+
+It's an MDA, written in python with a filtering mechanism using white lists (the e-mail addresses you trust), blacklists (the spammer mail addresses). Additionally, e-mails use a tagging mechanism like time-dependant addresses or for a certain kind of communication. The cool thing though, e-mail addresses which are neither in the white- nor in the blacklist need to be confirmed by the sender. I'm actually a bit curious how this will work.
+
+If you're bombed with spam each day, you may want to have a look at TMDA. Though you should know how to setup your mail queue, it's not as easy as installing Mozilla Thunderbird on your system.
+<div class="flockcredit" style="text-align:right;color:#CCC;font-size:x-small;">Blogged with the <a title="Flock Browser" href="http://www.flock.com/blogged-with-flock" target="_new">Flock Browser
+</a><a href="http://www.flickr.com/photos/david-trattnig/" title="flickr page">, photo by David Trattnig</a></div>
+<!-- technorati tags begin -->
+<p style="font-size:10px;text-align:right;">Tags: <a rel="tag" href="http://technorati.com/tag/antispam">antispam</a>, <a rel="tag" href="http://technorati.com/tag/mail">mail</a>, <a rel="tag" href="http://technorati.com/tag/%20tmda"> tmda</a></p>
+<!-- technorati tags end -->

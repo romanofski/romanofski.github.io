@@ -1,0 +1,15 @@
+---
+title: "Fun with a Card Reader"
+tags: 
+- 4dcreative
+- embroidery
+- pfaff
+---
+
+<a href="http://www.flickr.com/photos/romanofski/2467371319/"><img class="alignright" style="float:right;" src="http://farm3.static.flickr.com/2078/2467371319_0fa895bb5f_s.jpg" alt="" width="75" height="75" /></a>My mum bought a software+hardware solution for her sewing machine from <a title="Pfaff Homepage" href="http://www.pfaff.com" target="_self">Pfaff</a>. The software transforms vector images into data which the sewing machine can read. It stitches the image on a piece of fabric. Actually very neat, if it works.
+
+But as always there are problems. I can't get the card reader to work. It just remains silent. Windows recognizes the new piece of hardware, as well as GNU Linux does. Reading and writing is not possible, because the software shipped with the card reader can't read from the card (at least that's what's the error message says).
+
+Now... we have to call support...
+
+<strong>Update</strong>: It turned out that the card was defect. How can someone produce b0rked cards? No quality control?

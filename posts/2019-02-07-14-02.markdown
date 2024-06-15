@@ -1,0 +1,46 @@
+---
+title: "GHC: can't find a package database"
+tags: 
+- Haskell
+- Nix
+---
+
+In case you're using the nix package manager your <code>nix build</code> fails with:
+
+<code>
+these derivations will be built:
+/nix/store/7xk0m6r07x85rwlh01b3wvq8bbzwbw1n-purebred-0.1.0.0.drv
+/nix/store/dmj2ax3qsa55jjl6by9fb9sk929k98nl-ghc-8.6.3-with-packages.drv
+/nix/store/j9fl8cmq9c6kjnz9dj79rmbs1kzafyys-purebred-with-packages-8.6.3.drv
+building '/nix/store/7xk0m6r07x85rwlh01b3wvq8bbzwbw1n-purebred-0.1.0.0.drv'...
+setupCompilerEnvironmentPhase
+Build with /nix/store/cclv7n6jr311i5ywwkms1m3iz4lsg37j-ghc-8.6.3.
+unpacking sources
+unpacking source archive /nix/store/j23vlzlg2rmqy0a706h235j4v9zh4m9s-purebred
+source root is purebred
+patching sources
+compileBuildDriverPhase
+setupCompileFlags: -package-db=/build/setup-package.conf.d -j4 -threaded
+Loaded package environment from /build/purebred/.ghc.environment.x86_64-linux-8.6.3
+ghc: can't find a package database at /home/rjoost/.cabal/store/ghc-8.6.3/package.db
+builder for '/nix/store/7xk0m6r07x85rwlh01b3wvq8bbzwbw1n-purebred-0.1.0.0.drv' failed with exit code 1
+cannot build derivation '/nix/store/dmj2ax3qsa55jjl6by9fb9sk929k98nl-ghc-8.6.3-with-packages.drv': 1 dependencies couldn't be built
+cannot build derivation '/nix/store/j9fl8cmq9c6kjnz9dj79rmbs1kzafyys-purebred-with-packages-8.6.3.drv': 1 dependencies couldn't be built
+error: build of '/nix/store/j9fl8cmq9c6kjnz9dj79rmbs1kzafyys-purebred-with-packages-8.6.3.drv' failed
+</code>
+
+then the solution to it is actually easier then you think. It happens when you run
+
+<code>
+cabal new-repl
+</code>
+
+inside a nix shell, because cabal creates a hidden environment file. So look for a
+
+<code>
+.ghc.environment.--
+# for example on Linux with GHC 8.6.3
+.ghc.environment.x86_64-linux-8.6.3
+</code>
+
+Delete it and you should be good to go.

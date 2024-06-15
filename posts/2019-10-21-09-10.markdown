@@ -1,0 +1,80 @@
+---
+title: "User permissions checking"
+tags: 
+---
+
+<h3>Background</h3>
+I've currently been working on restricting user access to executables on a Linux box. I removed all executable rights for others and added them via access control lists for certain groups. So for example for cat it looked like this:
+<code># getfacl /usr/bin/cat
+getfacl: Removing leading '/' from absolute path names
+# file: usr/bin/cat
+# owner: root
+# group: root
+user::rwx
+group::r-x
+other::r--</code>
+
+For an executable I want the user access to the permissions looked like this:
+
+<code>
+# getfacl /usr/bin/ping
+getfacl: Removing leading '/' from absolute path names
+# file: usr/bin/ping
+# owner: root
+# group: root
+user::rwx
+group::r-x
+group:staff:--x
+mask::r-x
+other::r--
+</code>
+
+The user is in the staff group and can execute 'ping', while everyone else get's a permission denied.
+<h3>The Test</h3>
+As an automated test, I thought I go over all commands and produce a whitelist of executables a given user has access to.
+
+The script looks a bit like this for a single executable:
+
+<code># cat /tmp/foo.py
+import os</code>
+
+# the users group id
+os.setgid(2000)
+# the users ID
+os.setuid(2003)
+
+print(os.access('/usr/bin/cat', os.X_OK))
+print(os.access('/usr/bin/ping', os.X_OK))
+
+When I run it I expected the test for the first executable to be false and the second to be true:
+
+<code>
+# python /tmp/foo.py
+True
+True
+</code>
+
+Aeh what? Doesn't the script run as my user who's in the staff group?
+
+Turns out there is more to the process than just the group and user id. There are also <strong>supplementary </strong>groups and capabilities. When changing the script to call <code>print(os.getgroups())</code> it printed the supplementary groups of the user I was running the script as, which was root in this circumstance. Changing the script to also set the supplementary groups to the one of the user:
+
+<code>
+import os</code>
+
+# the users group id
+os.setgid(2000)
+os.setgroups([2000, 2003])
+# the users ID
+os.setuid(2003)
+
+print(os.access('/usr/bin/cat', os.X_OK))
+print(os.access('/usr/bin/ping', os.X_OK))
+
+and running it returns the right results:
+<code>
+# python /tmp/foo.py
+False
+True
+</code>
+<h3>Caveats</h3>
+Restricting permissions with ACLs and testing the way I demonstrated above can lead to false positives for scripts. You can not remove executable permissions from the script interpreter (e.g. <code>/usr/bin/python</code>) while keeping it with an ACL on the actual script. The test above will tell you it's all fine and dandy, while in reality the user will run into a permission denied.

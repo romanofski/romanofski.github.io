@@ -1,0 +1,36 @@
+---
+title: "How not to criticise"
+tags: 
+- insult
+---
+
+Today I got an e-mail about the GIMP user manual. Those insults are not happening very often, but probably happening for every software project:
+<pre>Dear Sir,
+Open Source software at no financial cost to the consumer is an
+incredibly beautiful thing, which I honestly appreciate very much,
+however, I have serious concerns regarding the quality of the GIMP user
+manual.  Rather than point out the numerous grammatical errors and
+flippant writing style I would like to report that the entire manual is
+absolutely appalling, possibly the worst computer manual I have ever
+encountered, in fact, so bad I report it as being almost evil.
+
+The manual was clearly not written by native English speakers.  The
+contents page is too long, sorry, just thinking about that manual is
+making me angry and upset so i will leave it at that for now.
+
+If only there is a photo/image editing program that is as well presented
+as that on a MacBook. This is the first serious weakness I have found on
+OS software, everything else is fantastic!
+
+wishing you a lovely day and I hope that someone is kind enough to
+re-write the instructions properly!</pre>
+[caption id="" align="aligncenter" width="240" caption="by matthileo on flickr"]<a href="http://www.flickr.com/photos/matthileo/3816741058/"><img title="Angry" src="http://farm4.static.flickr.com/3476/3816741058_5374ee3b26_m.jpg" alt="" width="240" height="160" /></a>[/caption]
+<p style="text-align:center;"></p>
+So what's the problem with this so called criticism?
+<ol>
+	<li>The first widespread and common miss-assumption: "Open Source software <strong>at no financial cost</strong> to the consumer [...]". Free Software is <a href="http://www.gnu.org/philosophy/free-sw.html" target="_blank">not free as in free beer, it's free as in free speech</a>. If I like to be picky: GIMP isn't Open Source, it's Free Software; <a href="http://en.wikipedia.org/wiki/Open-source_software#Open_source_software_vs._free_software" target="_self">there is a difference</a>.</li>
+	<li>The mail - apart from the rant - doesn't address any problem. If the author could refer to a specific area in the manual which is faulty (descriptions, paragraphs, a URL of an article) it would allow authors to look for mistakes.</li>
+	<li>There is no pointer on better ways to do it.</li>
+	<li>If you know how to make it better, provide patches. We know, that the user manual can be improved in lots of areas. By just ranting against authors you won't change the manual.</li>
+</ol>
+The documentation team knows about the flaws of the manual, but everyone is trying hard each day to make it better. Helpful manuals don't fall from trees - it's hard work to produce them. <strong>Respect everyone who writes and contributes to free software!</strong>

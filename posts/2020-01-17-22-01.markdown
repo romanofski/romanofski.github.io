@@ -1,0 +1,42 @@
+---
+title: "TUI Acceptance Testing"
+tags: 
+- notmuch
+---
+
+Update: I had created this blog post as a draft and forgotten about it. Since this went into a <a href="https://archive.org/details/lca2020-Automated_acceptance_tests_for_terminal_applications">talk at LCA2020</a> I thought I publish it for completeness.
+
+Since <a href="https://github.com/purebred-mua/purebred">Purebred</a> is closing in on it's seconds birthday on 18th of July, I wanted to highlight how useful our suite of acceptance tests has become and what work went into it.
+<h2>The current state of affairs</h2>
+We use tmux extensively to simulate user input and basically black box test the entire application. Currently all 25 tests run on travis in 1 minute and 25 seconds. Most of it comes down to IO performance. On a modern i5 laptop it's down to 30seconds.
+
+<img class="alignnone size-full wp-image-1023" src="https://romanofskiat.wordpress.com/wp-content/uploads/2020/01/screenshot_2020-01-17-job-1366-1-purebred-mua-purebred-travis-ci.png" alt="Screenshot_2020-01-17 Job #1366 1 - purebred-mua purebred - Travis CI" width="706" height="585" />
+
+Each test runs performs a setup, starts the application and runs through a series of steps performing user input, waiting for the terminal to repaint and assert a given text to be present. Since everything is text in a terminal - even colours - this makes it really is to design a test suite if you can bridge the gap using tmux.
+
+I think I should explain more precisely what I mean by "waiting for the terminal to repaint". At this point in time, we poll tmux for our assertion string to be present. That happens in quick succession by checking the <a href="https://man.openbsd.org/OpenBSD-current/man1/tmux.1#capture-pane">hardcopy</a> of the terminal window (basically a screen shot) with an exponential back off.
+<h2>Problems we encountered</h2>
+<h3>tmux different behaviour between releases</h3>
+The travis containers run a much older version of GNU/Linux and therefore tmux. We've subcommands accepting different arguments or <a href="https://github.com/purebred-mua/purebred/commit/f3551f6f294e7fc1b1f7c93260118ffdd7ecb664#diff-bcf6e4dbb6f9784e38b79361126fa690">changed escape sequences</a> in the terminal screen shot.
+<h3>Tests fail randomly because of too generic assertion strings</h3>
+That took a bit of figuring out, but in hind sight it is really obvious. Since we determine the screen to be repainted once our assertion string shows up, we sometimes used a string which showed up in subsequent screens. Next steps were executed and the test failed at subsequent steps. This is confusing, since you wonder how the test steps have even gotten to this screen.
+
+We solved this not really technically, but simply by fixing the failing problems and documenting this potential pitfall.
+<h3>Races between new-session and tmux server</h3>
+Initially each test set up a new session and cleaned the session during a tear down. While this intention was good, it lead to randomly failing tests. The single session being torn down meant that also the server was killed. However, if the next session is created immediately after the old session is being removed we find our self in a race between the tmux server being killed and newly started.
+
+We <a href="https://github.com/purebred-mua/purebred/commit/689dc02082101d0705a77364d7845e94f1e29303#diff-bcf6e4dbb6f9784e38b79361126fa690">solved this problem</a> with a keep-alive session which runs as long the entire suite runs and numbering the test sessions.
+<h3>Asserting against terminal colours</h3>
+Some tests assert specific how widgets are specifically rendered including their ANSI colour codes. Since we do write the tests on our own computers which support more than 16 colours, the terminals the CI runs is typically less sophisticated. This can lead to randomly failing tests because the colours in CI are different depending on the type of the terminal.
+
+We <a href="https://github.com/purebred-mhttps://github.com/purebred-mua/purebred/commit/2195b5123dafefeaffcef0463fdb1bdd57af1017#diff-bcf6e4dbb6f9784e38b79361126fa690ua/purebred/commit/2195b5123dafefeaffcef0463fdb1bdd57af1017#diff-bcf6e4dbb6f9784e38b79361126fa690">solved this problem </a>by simply setting a "dumb" terminal only supporting 16 colours.
+<h3>Line wrapping in a terminal</h3>
+A terminal comes with a hard character line width. By default it's 80 characters (and 24 in height). Part of those 80 characters will be eaten up by your PS1 (the command prompt) setting of your shell, the rest can be consumed by command input.
+
+We did run into randomly failing tests if lines wrapped at random points in the input and therefore introduced newlines in the output.
+
+We solved this by invoking tmux with an additional "-J" parameter to join wrapped lines.
+<h2>Optimisations</h2>
+Initially, each step was waiting up to 6 seconds for a redraw. With an increasing amount of tests, the wait time for a pass or fail increased as well. Since we faced some flaky tests, we felt fixing those first, before making the tests run faster. The downside of optimising first and fixing flaky tests afterwards is that random test failures become more pronounced eroding the confidence in any automated test suite.
+
+After were were sure we had caught all problems, we introduced an <a href="https://github.com/purebred-mua/purebred/commit/8d5b6e8d40299cea21483ff384034c36d78b2a8d#diff-bcf6e4dbb6f9784e38b79361126fa690">exponential back off </a>patch which would wait cumulatively up to a second for the UI to be repainted. That's a long time for the UI to change.

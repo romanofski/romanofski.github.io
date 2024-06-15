@@ -1,0 +1,28 @@
+---
+title: "handleUidAnnotationEvent from Products.CMFUID throws AttributeError"
+tags: 
+- Plone
+- python
+---
+
+I stumbled over a weird error during a package setup, which turned out a <a href="https://en.wikipedia.org/wiki/User_error">PEBCAC</a> error. The full traceback:
+<pre>
+<code>
+[...]
+File "/home/roman/.buildout/eggs/zope.interface-3.6.3-py2.6-linux-x86_64.egg/zope/interface/adapter.py", line 583, in subscribers
+    subscription(*objects)
+File "/home/roman/.buildout/eggs/Products.CMFUid-2.2.1-py2.6.egg/Products/CMFUid/UniqueIdAnnotationTool.py", line 86, in handleUidAnnotationEvent
+    uid_handler.unregister(ob)
+AttributeError: 'NoneType' object has no attribute 'unregister'
+</code>
+</pre>
+
+I went throught my whole code and type setup unable to find the mistake I've made unless I saw the problem. I <strong>imported</strong> a configuration module for an ArcheTypes content type declaration <strong>from a separate package which was not declared in the setup.py</strong> of my new package, e.g.:
+<pre><code>
+$ cat my.package.event.py
+from separate.package.config import PROJECTNAME
+from plone.directives.form import Schema
+
+class IMyType(Schema): ...
+</code></pre>
+If you stumble over this error, make sure your imports are sane.

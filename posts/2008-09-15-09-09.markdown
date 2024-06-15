@@ -1,0 +1,21 @@
+---
+title: "GAH - The stupid online postage stamp"
+tags: 
+- dhl
+- pdf
+- print
+---
+
+I ordered a paket of shoes from an online shop. Now I want to send them back and the online shop uses an automatic  <a title="Online Frankierung (German)" href="https://www.dhl.de/popweb/ProductOrder.do?checkOnInit=false&amp;insert=true" target="_self">postage stamp provided by</a> DHL.
+
+[caption id="attachment_70" align="alignleft" width="300" caption="The yellow fields in the top right corner are buttons which trigger a "]<a href="http://romanofskiat.wordpress.com/wp-content/uploads/2008/09/versandmarke.jpg"><img class="size-medium wp-image-70" title="DHL online postage stamp." src="http://romanofskiat.wordpress.com/wp-content/uploads/2008/09/versandmarke.jpg?w=300" alt="The yellow fields in the top right corner are buttons which trigger a 'print' on your standard printer." width="300" height="183" /></a>[/caption]
+
+You can download a PDF, which can only be opened by Adobe Acrobat or any PDF reader who understands Javascript. What you don't expect, are Javascript buttons in the upper right corner, which actually start a print job. I mean, you're looking at a document with a reader, not an application to start print jobs. That's why the 'print' button of the reader application is for. Isn't it?
+
+So, all of a sudden, I clicked randomly in the PDF to get rid of the stupid 'Muster' letters, which make it difficult to see the actual postage stamp. After I closed the reader, I noticed that there happened something. The printer was already printing like hell and the terminal showed me the following debug output:
+
+<code>Auftrags-ID ist milhouse-107 (1 Dateien)
+Auftrags-ID ist milhouse-108 (1 Dateien)
+Auftrags-ID ist milhouse-109 (1 Dateien)
+Auftrags-ID ist milhouse-110 (1 Dateien)
+Auftrags-ID ist milhouse-111 (1 Dateien)</code>

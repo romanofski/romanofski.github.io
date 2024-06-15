@@ -1,0 +1,25 @@
+---
+title: "(Locally) Testing ansible deployments"
+tags: 
+- deployment
+- testing
+---
+
+I've always felt my playbooks undertested. I know about a possible solution of spinning up new OpenStack instances with the<a href="http://docs.ansible.com/nova_compute_module.html"> ansible nova module</a>, but felt it to be too complex as a good idea to implement. Now I've found a quicker way to test your playbooks by using <a href="http://www.docker.io">Docker</a>.
+
+In principal, <a href="https://github.com/romanofski/junglebuild/tree/master/test">all my test</a> does is:
+<ol>
+	<li>create a docker container</li>
+	<li>create a copy of the current ansible playbook in a temporary directory and mount it as a volume</li>
+	<li>inside the docker container, run the playbook</li>
+</ol>
+This is obviously not perfect, since:
+<ul>
+	<li>running a playbook locally vs connecting via ssh can be a different beast to test</li>
+	<li>can become resource intensive if you want to test different scenarios represented as docker images.</li>
+</ul>
+There is possibly more, but for myself in small it is a workable solution so far.
+
+Find the <a href="https://github.com/romanofski/junglebuild/">code on github</a> if you'd like to have a look. Improvements welcome!
+
+&nbsp;

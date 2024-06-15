@@ -1,0 +1,9 @@
+---
+title: "KVM: Resizing a VMs hard disk"
+tags: 
+- virtual machine
+---
+
+When it comes to a full hard disk in one of your virtual machines, I found this article utterly useful resizing it:
+<p class="title">KVM Linux - Expanding a Guest LVM File System Using Virt-resize
+<a href="http://blog.oneiroi.co.uk/linux/kvm/virt-resize/RHEL/LVM/kvm-linux-expanding-a-lvm-guest-file-system-using-virt-resize/">http://blog.oneiroi.co.uk/linux/kvm/virt-resize/RHEL/LVM/kvm-linux-expanding-a-lvm-guest-file-system-using-virt-resize/</a></p>

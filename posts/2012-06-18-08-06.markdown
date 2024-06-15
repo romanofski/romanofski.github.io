@@ -1,0 +1,21 @@
+---
+title: "Could not initialize Opera"
+tags: 
+- linux
+- tools
+---
+
+Just ran into a problem this morning since opera has been working up to Opera v. 12.
+
+On start-up you get something like this:
+<pre>captainmoonlite :: ~ » opera
+Could not initialize Opera.</pre>
+Running the startup script with <a href="https://en.wikipedia.org/wiki/Strace" title="strace wikipedia page">strace</a> reveals the culprit:
+<pre>captainmoonlite :: ~ » strace opera
+execve("/usr/bin/opera", ["opera"], [/* 71 vars */]) = 0
+[...]
+lstat("/home/roman/.kde/share/config/kcmnspluginrc", 0x7fffbd443080) = -1 EACCES (Permission denied)
+write(2, "Could not initialize Opera.\n", 28Could not initialize Opera.</pre>
+After fixing the permissions of .kde/share/config, opera started just fine. Opera v.11 must have not accessed this directory or file. strace FTW!
+
+<a href="http://romanofskiat.wordpress.com/wp-content/uploads/2012/06/screenshot-from-2012-06-18-080830.jpg"><img class="aligncenter size-medium wp-image-463" title="Opera 12 working" src="http://romanofskiat.wordpress.com/wp-content/uploads/2012/06/screenshot-from-2012-06-18-080830.jpg?w=300" alt="" width="300" height="195" /></a>

@@ -1,0 +1,24 @@
+---
+title: "Undo a git reset"
+tags: 
+- git
+- hacking
+---
+
+I just happened to muck around with a repository and "accidently" reset it to a previous commit. It looked as if I lost all my recent changes. But I found out that you can "undo" the operation, here is how:
+
+Lets say you've reset your repository to specific commit in the past:
+<pre>$ git reset --hard b0f7f7e600b1add7d27cc6794c68ec332a8eb90e</pre>
+Now the latest commit is obviously b0f7f7e600b1add7d27cc6794c68ec332a8eb90e and all newer commits seem to be gone. You can figure out the SHA id of your previous HEAD with the reflog:
+<pre>$ git reflog
+c8b2660 HEAD@{0}: commit (amend): Bla foobar
+780cd51 HEAD@{1}: commit: updated HEAD
+...</pre>
+Your previous HEAD should be among those entries in the reflog. Look for the 'updated HEAD' commit. In my example it's HEAD@{1}. Pick the SHA of the commit you think was the previous HEAD and reset the repository again:
+<pre>$ git reset --hard 780cd51</pre>
+References:
+<ul>
+	<li><a href="http://stackoverflow.com/questions/5984428/how-to-delete-the-old-history-after-running-git-filter-branch">How to delete the old history after running git filter-branch? (Stack Overflow)</a></li>
+	<li><a href="http://stackoverflow.com/questions/359424/detach-subdirectory-into-separate-git-repository">Detach subdirectory into separate Git repository
+</a></li>
+</ul>

@@ -1,0 +1,11 @@
+---
+title: "The skipper and the fish"
+tags: 
+- documentary fishermen trawlermen software development
+---
+
+I watched <a href="http://en.wikipedia.org/wiki/Trawlermen_(TV_series)" target="_self">Trawlermen</a> on <a href="http://www.sbs.com.au/" target="_self">SBS</a> yesterday. The documentary is about the work of a number of trawler crews based in Peterhead/Ireland. I have two quotes from the documentary which I found really interesting. It can be applied probably to any other business including writing software.
+
+The skipper said: "Without my crew I'm nothing, because I can't catch the fish all by myself." The crew in turn said: "We have to trust the decisions made by the skipper. He leads us to the best fishing grounds which in turn brings the most money for the fish."
+
+So for now, all the people out there who think they can always do it better on their own, think about this documentary.

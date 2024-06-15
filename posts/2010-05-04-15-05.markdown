@@ -1,0 +1,61 @@
+---
+title: "How to setup a browseable source code repository in minutes."
+tags: 
+- development
+- hacking
+- source code repository
+---
+
+Browsing source code repositories (such as <a href="http://www.git-scm.com">git</a>, <a href="http://subversion.tigris.org/" target="_self">subversion</a>, etc) just by using the command line client is very cumbersome. Fortunately, there are web-repository browsers available, which - once set up - allow the user to browse the source code with his web-browser. The company haven't had one, I needed one badly, so I was looking for solutions.
+<p style="text-align:center;"><a title="Bella and Thomas by romanjoost, on Flickr" href="http://www.flickr.com/photos/romanofski/4233434268/"><img class="aligncenter" src="http://farm3.static.flickr.com/2184/4233434268_05f7140559_m.jpg" alt="Bella and Thomas" width="160" height="240" /></a></p>
+<strong>What I needed, was actually very simple</strong>: a read-only checkout of a selected set of repositories, which are constantly updated and therefore browse-able.
+
+I first tried <a href="http://progetti.arstecnica.it/tailor">tailor</a> and ... failed. The documentation is not very extensive and if you try to solve an authentication issue with three components involved (ssh, tailor and git) you're burning time.
+
+I thought a better way is possibly by using git-svn. I wrote a little bash script, which clones a list of source code repositories and updates them constantly. Because the whole thing took me about an hour to setup, I thought it would be prudent to share the little piece of code with the outside world. Maybe someone feels lucky and needs something similar:
+<pre>#!/bin/bash
+# the directory in which all repositories are mirrored
+ROOT=$HOME/repos
+SCRIPTROOT=$HOME/bin
+# repository urls
+SVNROOT=svn://svn.urltoyourrepsitory.net/repo
+GITROOT=ssh://git.urltoyourrepository.net/repo
+# list seperated by newline with the names of all repositories
+GITREPOSITORIES=`cat $SCRIPTROOT/gitrepositories`
+REPOSITORIES=`cat $SCRIPTROOT/svnrepositories`
+AUTHORSFILE=$SCRIPTROOT/svnauthors
+
+rebase_only() {
+ if test -d $1; then
+ cd $1;
+ echo "Rebase in " `pwd`;
+ case $2 in
+ svn)
+ git svn rebase;
+ ;;
+ *)
+ git pull --rebase;
+ esac
+ cd $ROOT;
+ fi;
+}
+
+cd $ROOT;
+
+for repo in $REPOSITORIES; do
+ rebase_only $repo "svn";
+ if !(test -d $repo); then
+ echo "creating new repo" $repo
+ git svn clone -A$AUTHORSFILE $SVNROOT/$repo;
+ fi;
+done;
+
+for repo in $GITREPOSITORIES; do
+ tmp=${repo##*/};
+ reponame=${tmp%*.git};
+ rebase_only $reponame "git";
+ if !(test -d $reponame); then
+ echo "creating new git repo" $repo;
+ git clone $GITROOT/$repo;
+ fi;
+done;</pre>

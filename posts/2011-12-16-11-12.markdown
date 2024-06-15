@@ -1,0 +1,20 @@
+---
+title: "Debugging PosKey Errors in ZODB"
+tags: 
+- debug
+- python
+- ZODB
+---
+
+I ran into a KeyError while packing a ZODB database in production. It lead me to a PosKey error while loading objects which did not exist anymore. For those of you in a similar situation here is what I found very helpful:
+<ul>
+	<li><a title="Using zc.zodbdgc (fix PosKeyError’s)" href="http://zodb.org/documentation/articles/multi-zodb-gc.html">Using zc.zodbdgc (fix PosKeyError’s)</a></li>
+	<li><a title="Fixing Broken ZODB Object references" href="http://nathanvangheem.com/news/fixing-broken-zodb-object-references">Fixing Broken ZODB Object references</a></li>
+</ul>
+Packages I've found useful:
+<ul>
+	<li>ZODB3 and it's provided scripts (fsrefs, fsoids)</li>
+	<li>zc.zodbdgc</li>
+	<li>eye - a ZODB browser</li>
+</ul>
+Happy debugging!

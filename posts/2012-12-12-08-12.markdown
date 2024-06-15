@@ -1,0 +1,24 @@
+---
+title: "ZODB/ZEO Error Masking Wrong Filesystem Permissions"
+tags: 
+- deployment
+- Plone
+---
+
+One of the clients staging instances showed quite a few tracebacks of that type:
+<pre>Traceback (innermost last):
+  ...
+  Module zope.contentprovider.tales, line 77, in __call__
+  Module zope.viewlet.manager, line 112, in update
+  Module zope.viewlet.manager, line 118, in _updateViewlets
+  Module my.product.viewlets.industry, line 29, in update
+  Module Products.ZCatalog.Lazy, line 190, in __getitem__
+  Module Products.ZCatalog.Catalog, line 121, in __getitem__
+  Module ZODB.Connection, line 860, in setstate
+  Module ZODB.Connection, line 901, in _setstate
+  Module ZEO.ClientStorage, line 815, in load
+  Module ZEO.cache, line 143, in call
+  Module ZEO.cache, line 494, in load
+  Module ZODB.fsIndex, line 125, in get
+TypeError: mybrains.__cmp__(x,y) requires y to be a 'mybrains', not a 'NoneType'</pre>
+I'm getting to the point, since it had something to do with the deployment. Some packages were deployed as develop eggs on the instance. Only a few files were created with the wrong filesystem permissions, so neither Zope nor ZEO were able to access them. After changing the permissions the errors were gone. <strong>So be sure to check all filesystem permissions and if the processes have access to them. </strong>If that doesn't solve it, be sure to also <a href="http://developer.plone.org/troubleshooting/exceptions.html#valueerror-non-zero-version-length-versions-aren-t-supported">check if not your database is corrupt.</a>

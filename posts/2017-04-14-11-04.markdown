@@ -1,0 +1,42 @@
+---
+title: "Profiling Haskell: Don't chase the red herring"
+tags: 
+- GTFS
+- Haskell
+---
+
+I'm currently working on a small Haskell tool which helps me minimize the waiting time for catching a train into the city (or out). One feature I've implemented recently is an automated import of aprox. 25MB compressed CSV data into an SQLite3 database, which was very slow in the beginning. Not focusing on the first results of the profiling information helped to optimize the implementation for a swift import.
+<h3>Background</h3>
+The data comes as a 25MB zip archive of text files in a CSV format. All imported, the SQLite database grows to about 800 MiB. My work-in-progress solution was a cruddy shell + SQL script which imports the CSV files into an SQLite database. With this solution, the import takes about 30 seconds, excluding the time you need to manually download the zip file. But this is not very portable, as I wanted to have a more user friendly solution.
+
+The initial Haskell implementation using mostly the esqueleto and persistent DSL functions showed an abysmal performance. I had to stop the process after half an hour.
+<h3>Finding the culprit</h3>
+A first profiling pass showed this result summary:
+<pre>COST CENTRE          MODULE                         %time %alloc                                                                                                                               
+                                                                                                                                                                                               
+stepError            Database.Sqlite                 77.2    0.0                                                                                                                               
+concat.ts'           Data.Text                        1.8   14.5                                                                                                                               
+compareText.go       Data.Text                        1.4    0.0                                                                                                                               
+concat.go.step       Data.Text                        1.0    8.2                                                                                                                               
+concat               Data.Text                        0.9    1.4                                                                                                                               
+concat.len           Data.Text                        0.8   13.9                                                                                                                               
+sumP.go              Data.Text                        0.8    2.1                                                                                                                               
+concat.go            Data.Text                        0.7    2.6                                                                                                                               
+singleton_           Data.Text.Show                   0.6    4.0                                                                                                                               
+run                  Data.Text.Array                  0.5    3.1                                                                                                                               
+escape               Database.Persist.Sqlite          0.5    7.8                                                                                                                               
+&gt;&gt;=.\                Data.Attoparsec.Internal.Types   0.5    1.4                                                                                                                               
+singleton_.x         Data.Text.Show                   0.4    2.9                                                                                                                               
+parseField           CSV.StopTime                     0.4    1.6                                                                                                                               
+toNamedRecord        Data.Csv.Types                   0.3    1.2                                                                                                                               
+fmap.\.ks'           Data.Csv.Conversion              0.3    2.9                                                                                                                               
+insertSql'.ins       Database.Persist.Sqlite          0.2    1.4                                                                                                                               
+compareText.go.(...) Data.Text                        0.1    4.3                                                                                                                               
+compareText.go.(...) Data.Text                        0.1    4.3</pre>
+Naturally I checked the implementation of the first function, since that seemed to have the largest impact. It is a simple foreign function call to C. Fraser Tweedale made me aware, that there is not more speed to gain here, since it's already calling a C function. With that in mind I had to focus on the next entries. It turned out that's where I gained most of the speed to something more competitive against the crude SQL script and having it more user friendly.
+
+It turned out that Data.Persistent uses primarily Data.Text concatenation to create the SQL statements. That being done for every insert statement is very costly, since it prepares, binds values and executes the statement for each insert (for reference <a href="http://stackoverflow.com/questions/1711631/improve-insert-per-second-performance-of-sqlite">see this Stack Overflow answer</a>).
+<h3>The solution</h3>
+My current solution is to <a href="https://github.com/romanofski/gtfsschedule/blob/master/src/CSV/Import.hs#L173">prepare the statement</a> once and only <a href="https://github.com/romanofski/gtfsschedule/blob/master/src/CSV/Import.hs#L174">bind the values</a> for each insert.
+
+Having done another benchmark, the import time now comes down to approximately a minute on my Thinkpad X1 Carbon.

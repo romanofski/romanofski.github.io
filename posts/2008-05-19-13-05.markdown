@@ -1,0 +1,36 @@
+---
+title: "LGM AftermathLGM Aftermath"
+tags: 
+- docbook
+- gimp-help-2
+- lgm
+- lgm2008
+---
+
+or: How I learned how to write documentation the hard way.
+<h2><span style="font-weight:bold;">Current situation</span></h2>
+The current situation for the GIMP user manual is this:
+<ul>
+	<li>The user manual is written using DocBook/XML.</li>
+	<li> Each DocBook/XML file contains all translations separated by <span style="font-style:italic;">lang</span> attributes.</li>
+</ul>
+When I joined the documentation project back in 2003, we thought, that the separation of author and translator brings unnecessary barriers:
+<ul>
+	<li>Authors can only write in one language (reference language)</li>
+	<li>Translators can only translate a string given by the reference language and are enforced to do only that (translation slaves)</li>
+</ul>
+Our model (mixing translations with the actual documentation writing) was superior, because the classic model of translators didn't exist anymore. Every writer was free to describe a GIMP function or GIMP model in it's own way. <span style="font-weight:bold;">The only problem we had</span>: No translator was able to join us, because the writing of DocBook/XML scared everyone away. Additionally - in the meantime - maintaining all translations became a burden for everyone.
+<h2><span style="font-weight:bold;"><a href="http://www.libregraphicsmeeting.org/2008/index.php?lang=en" target="_self">Libre Grafics Meeting 2008</a>
+</span></h2>
+I saw dark clouds coming upon me this time. Me as the one who still defended our model of creating documentation for GIMP. <a href="http://andy.brisgeek.com/" target="_self">Andy Fitzsimon</a> used the GIMP manual as a bad example of an unmaintainable documentation in his talk. He is right, as well as all the other guys who tried to tell us.
+
+Back in 2007 I couldn't see, that our way we create documentation was supposed to fail:
+<ul>
+	<li><strong>lack of contributors</strong> a.k.a translators. Writing XML as a translator is hard. There are a lot of tools available for translators which provide a very nice and usable GUI.</li>
+	<li><strong>not focusing on one language</strong> which will be the reference language.
+You can only concentrate on one thing and not on eleven other manuals simultaneously.</li>
+	<li>and the worst: <strong>Trying to invent the wheel</strong>.
+Tools and Architecture is already developed by others. They do have disadvantages though, but you can't solve them by creating something new and just thinking, it will be better than other tools because it's new.</li>
+</ul>
+I learned my lesson. We now switch to a system using one reference language and creating translations from this language. Andy Fitzsimon introduced <a href="https://fedorahosted.org/publican">publican</a> as a possible basis, as well as  Erik Gebers introducing <a href="http://scenari-platform.org/projects/scenari/en/pres/co/">Scenari.</a> Both noteworthy tools which are interesting to look at.
+<div class="flockcredit" style="text-align:right;color:#CCC;font-size:x-small;">Blogged with the <a title="Flock Browser" href="http://www.flock.com/blogged-with-flock" target="_new">Flock Browser</a></div>

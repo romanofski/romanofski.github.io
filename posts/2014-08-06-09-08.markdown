@@ -1,0 +1,15 @@
+---
+title: "(lxml) XPath matching against nodes with unprintable characters"
+tags: 
+---
+
+Sometimes you want to clean up HTML by removing tags with unprintable characters in them (whitespace, non breaking space, etc). Sometimes encoding this back and forth results in weird characters when the HTML is rendered. Anyways, here is the snippet you might find useful:
+<pre><code>
+def clean_empty_tags(node):
+    """
+    Finds all tags with a whitespace in it. They come out broke and
+    we won't need them anyways.
+    """
+    for empty in node.xpath("//p[.='\xa0']"):
+        empty.getparent().remove(empty)
+</code></pre>

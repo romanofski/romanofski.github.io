@@ -1,0 +1,12 @@
+---
+title: "PyCon Australia 2015"
+tags: 
+---
+
+If anyone is interested in my talk I gave at PyCon Australia in Brisbane, here is the YouTube link:
+
+[embed]https://www.youtube.com/watch?v=S1Nx3zSkd40[/embed]
+
+Slides can be found here: <a href="http://redhat.slides.com/rjoost/deck-3/">http://redhat.slides.com/rjoost/deck-3/</a>YouTube link: <a href="https://youtu.be/S1Nx3zSkd40">How your Python program behaves: a story on how to build a program slicer</a>
+
+The conference was a blast. Thanks to the organisers for this wonderful conference.

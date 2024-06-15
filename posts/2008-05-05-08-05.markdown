@@ -1,0 +1,8 @@
+---
+title: "Back to Basics"
+tags: 
+---
+
+I got myself a blog on wordpress.
+
+I hacked on a few blog products for Zope myself, but I abandon now those projects. I'm open for new challenges.

@@ -1,0 +1,52 @@
+---
+title: "Upgrading Ghostscript and CentOS"
+tags: 
+- centos
+- fonts
+- ghostscript
+- linux
+---
+
+The installed Ghostscript version on CentOS is usually too old if you compare it to installations like Ubuntu. Upgrading ghostscript without compiling the whole package is a challenge, but I found via <a title="Chris Schuld's Blog" href="http://chrisschuld.com/">Chris  Schuld's Blog</a> a link to the <a href="http://blackopsoft.com/">http://blackopsoft.com/</a> repository which provides a recent ghoscript version.
+<h2>The Problem</h2>
+Nevertheless, I still had troubles with <a href="http://www.imagemagick.org/script/index.php">ImageMagick</a>. If you want to convert PDFs to images for example, the installed ghostscript version was unable to lookup certain font files resulting in an error similar to this one:
+<pre>Error: /invalidfont in findfont
+Operand stack:
+   Arial-ISO   Arial-ISO   Arial   Font   Arial
+Execution stack:
+   [...]
+Dictionary stack:
+  [...]
+Current allocation mode is local
+Last OS error: 2
+Current file position is 279
+GNU Ghostscript 7.05: Unrecoverable error, exit code 1</pre>
+<h2>The Solution</h2>
+I hunted around in the system. Apparently ghostscript still uses a <a href="http://pages.cs.wisc.edu/~ghost/doc/cvs/Fonts.htm">fontmap</a> to lookup fonts. The question is which fontmap was in use. I tried to change the fontmap in /etc/ghostscript which had no affect.
+
+I finally found a bogus fontmap under
+<pre>/usr/share/ghostscript/8.70/Resource/Init</pre>
+which provided all font entries and aliases, but none of the aliases had a font file associated with it. For example, Helvetica-Bold pointed to NimbusSanL-BoldCond, but  NimbusSanL-BoldCond had <strong>no pointer to an existing font file in the file system. It was simply missing.</strong>
+<h2>The Fix</h2>
+I got it now working with this in <strong>/usr/share/ghostscript/8.70/Resource/Init</strong>:
+<pre>%!
+% See Fontmap.GS for the syntax of real Fontmap files.
+%% Replace 1 (Fontmap.GS)
+/NimbusSanL-Regu        (n019003l.pfb)  ;
+/NimbusSanL-ReguItal    (n019023l.pfb)  ;
+/NimbusSanL-Bold        (n019004l.pfb)  ;
+/NimbusSanL-BoldItal    (n019024l.pfb)  ;
+
+/NimbusSanL-ReguCond    (n019043l.pfb)  ;
+/NimbusSanL-ReguCondItal        (n019063l.pfb)  ;
+/NimbusSanL-BoldCond    (n019044l.pfb)  ;
+/NimbusSanL-BoldCondItal        (n019064l.pfb)  ;
+
+(Fontmap.GS) .runlibfile
+</pre>
+References:
+<ul>
+	<li>
+<pre><a href="http://docs.scribus.net/index.php?lang=en&amp;page=gsfont">Scribus: http://docs.scribus.net/index.php?lang=en&amp;page=gsfont</a></pre>
+</li>
+</ul>

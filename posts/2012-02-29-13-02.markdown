@@ -1,0 +1,24 @@
+---
+title: "How *not* to calculate a future date"
+tags: 
+- defect
+- mistake
+- python
+---
+
+This mail was in my Inbox today and I was puzzled at first:
+<blockquote>When I tried to start Zope it returned an error:
+<code>
+DateError: Invalid date: (2022, 2, 29)
+</code></blockquote>
+Apparently it only happend on a leap year and exactly on the 29th of
+February. Checking the old code base (Python 2.4, Plone 3) revealed this:<code></code>
+<pre><code>
+DateTime.DateTime(
+    <strong> DateTime.DateTime().year() + 10</strong>,
+    DateTime.DateTime().month(),
+    DateTime.DateTime().day())
+</code></pre>
+<strong>*Doh!*</strong>. Python provides a <a title="Python 2.4 library reference - timedelta." href="http://docs.python.org/release/2.4.3/lib/datetime-timedelta.html" target="_blank">timedelta (Python 2.4 Library reference)</a> module which would be better for calculating future dates.
+
+<strong>Update:</strong> Apparently others writing similar mistakes ;) <a href="http://www.theregister.co.uk/2012/02/29/windows_azure_outage/" title="Windows Azure">Microsoft's Azure cloud down and out for 8 hours</a> (via <a href="http://blog.fefe.de/?ts=b1b0a02f" title="fefe">fefe</a>)

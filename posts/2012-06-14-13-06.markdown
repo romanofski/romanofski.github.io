@@ -1,0 +1,74 @@
+---
+title: "Patching tzdata and What I Learned From it"
+tags: 
+- Jenkins
+- python
+- RPM
+---
+
+<h2>The problem</h2>
+I've never paid much thoughts when dealing with dates, times and timezones until I moved to Australia. I should have.
+
+<img class="aligncenter" title="The tzdata vortex will suck you in" src="http://farm1.staticflickr.com/61/169527711_ef96fac1ea_n.jpg" alt="" width="320" height="240" />
+As it happened, if you're running a server on the east coast of Australia you're facing three issues:
+<ul>
+  <li>Queensland does not have daylight saving (yay)</li>
+  <li>Tasmania, New South Wales and Victoria have daylight saving</li>
+  <li>but, all of them are in the same timezone.</li>
+</ul>
+That means, if you run date on your Linux box you usually get something like that:
+<pre> Tue Jun 5 14:04:27 EST 2012</pre>
+Looks okey, doesn't it? Not if you start a Zope server:
+<pre>&gt;&gt;&gt; import DateTime
+&gt;&gt;&gt; DateTime.DateTime()
+DateTime('2012/06/05 14:06:49.964253 US/Eastern')</pre>
+Wait, what? I'm in Australia not in the US? This is not New York? It's sunny Brisbane?
+<h2>The solution...</h2>
+Apparently Australians also use AEST instead of EST as an appreviated form to specify the timezone. <a href="http://tedp.id.au/tzdata-au/" title="Corrected Australian Timezone Names for Unix">Ted Percival</a> - facing the same problem - created a patch, which introduces these appreviations in the tzdata package. Just pushing this patch upstream seams not to happen for whatever reasons.
+With this patch, I also had to compile a new tzdata rpm for CentOS for Mooball servers. This was a very manual and error prone process. And because I'm personally using Ubuntu I had to catch up with the documentation each time I had to compile and patch a new source rpm.
+
+<img class="aligncenter" title="The solution" src="http://farm1.staticflickr.com/115/289752540_30398cc974_n.jpg" alt="" width="320" height="240" />
+This lead me to create a <a href="https://github.com/mooballit/mooball.tzdata.git" title="mooball.tzdata">package with a Makefile</a>:
+<ol>
+  <li>It pulls down the source rpm,</li>
+  <li>applies the supplied patches and</li>
+  <li>builds a new rpm.</li>
+</ol>
+This package registered with Jenkins and you have always an updated RPM for each CentOS release.
+Copying the zonefile from e.g. Australia/Brisbane to /etc/localtime resulted in this:
+<pre> Tue Jun 5 14:04:27 AEST 2012</pre>
+and Zope reports:
+<pre>&gt;&gt;&gt; import DateTime
+&gt;&gt;&gt; DateTime.DateTime()
+DateTime('2012/06/05 14:06:49.964253 GMT+10')</pre>
+
+<h2>... is still only a workaround</h2>
+The problem seems to be application specific. Confirming with the man page on tzname seems to suggest, that applications need to check the timezone <b>and</b> the tzname tuple in order to correctly determine time with daylight saving.
+
+Zope seems to have workarounds added to the DateTime package. Setting a TZ environment variable like:
+
+<pre>TZ="AEST" bin/instance fg</pre>
+
+will set the correct timezone. Unfortunately it means, that you need to adjust the timezone environment variable on daylight saving (in our case Sydney or Melbourne) and restart your application. Using a patched tzdata helps to avoid restarting applications.
+
+<h2>What I learned</h2>
+So what I now got out of this is:
+<ul>
+  <li>Be more date/time/timezone aware when building applications</li>
+  <li>How to patch source rpms</li>
+  <li>
+  <a href="https://github.com/mooballit/mooball.tzdata" title="mooball.tzdata on github">A nice package</a>
+  which I can pop into Jenkins which compiles a custom patched rpm.
+  </li>
+  <li>You can adjust the time/date with a simple environment variable, e.g. TZ="AEST" bin/instance fg</li>
+  <li>
+  Some problems appear as an easy fix, but reveal a more complex situation underneath
+  </li>
+</ul>
+
+<h2>Update</h2>
+Talking to Dylan Jay from Pretaweb, there is more to the environment variable (I should have read the man page of <a href="http://linux.die.net/man/3/tzname" title="man page of tzname">tzname</a> more carefully). Setting the TZ variable to more than just AEST. You can specify beginning and end of daylight saving, eg:
+<pre>
+TZ="AEST-10AEDT-11,M10.4.2,M4.4.3" bin/instance fg
+</pre>
+The format is extensively documented in the <a href="http://linux.die.net/man/3/tzname" title="man page of tzname">man page of tzname</a>.

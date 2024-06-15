@@ -1,0 +1,13 @@
+---
+title: "Displaying useful information in your GNU screen"
+tags: 
+- GNU screen
+- howto
+- python
+---
+
+My working desktop setup used <a title="Xmonad project homepage" href="http://xmonad.org/" target="_blank">XMonad</a> as a window manager and a terminal using <a title="GNU Screen" href="http://www.gnu.org/software/screen/" target="_blank">GNU screen</a>. In XMonad, I was using <a title="Dzen Project page" href="http://gotmor.googlepages.com/dzen" target="_blank">dzen</a> as a small panel in the top corner for displaying useful information (mail, clock, battery status, etc). Dzen just display a text string. This can also be printed by a program. I wrote myself a simple python script, for doing that part like the example shows below:
+<pre>gocept:INBOX(1)  private: -- | Friday, 19.12.2008 10:44:15 (AUS 20:44, CAN 3:44)</pre>
+Now I switched to use <a title="Using XMonad and Gnome" href="http://www.haskell.org/haskellwiki/Xmonad/Using_xmonad_in_Gnome" target="_self">XMonad in GNOME</a>. Dzen is gone and I was looking for an alternative to display the information printed by my script. After a bit of googling, I found a very <a title="http://www.debian-administration.org/articles/560" href="http://www.debian-administration.org/articles/560" target="_self">nice howto</a> about GNU screen. Screen offers a harstatus and a caption line to display information. I tweaked my screenrc to use the python script in the caption line.
+
+Have a look at my <a href="http://amy.gocept.com/~roman/dzenscript.py" target="_blank">simple python script</a> or my <a href="http://amy.gocept.com/~roman/screenrc" target="_blank">screenrc</a>. Use it on your own risk of course ;)

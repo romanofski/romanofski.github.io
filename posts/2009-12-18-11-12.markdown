@@ -1,0 +1,36 @@
+---
+title: "Goals for Next Year"
+tags: 
+- 2010
+- goals
+- software
+- specification
+- year
+---
+
+A lot of people are setting new goals for the new year. I usually don't do that - either you change something instandly or you never going to do it. But well, let's say the change to 2010 just happens coincidently while I'm setting myself new goals.
+<h2>Be rational</h2>
+I've seen myself arguing in a very personal way in the past. I don't think it is good. The problem with this is, that it makes you blind for better solutions, the outcome of a discussion is biased by your ego and your judgement is therefore flawed. One of the lightning talks at <a href="http://nz.pycon.org/talks-cfp/schedule/" target="_self">this years KiwiPycon</a> actually opened my eyes with this, that we programmers have rather religious than rational discussions.
+<p style="text-align:center;"><a title="dsc_0106.nef by romanjoost, on Flickr" href="http://www.flickr.com/photos/romanofski/3982705611/"><img class="aligncenter" src="http://farm3.static.flickr.com/2431/3982705611_f0dfc8b183_m.jpg" alt="dsc_0106.nef" width="240" height="160" /></a></p>
+<p style="text-align:left;">Especially whenever you say: "I believe...", "I've the feeling of ...", "I guess..." are all applicants for coming up with arguments without any facts for backup. Good candidates to think again and get your facts sorted, before continuing further.</p>
+
+<h2>Write a Specification before Code</h2>
+Do you also have a bunch of projects, which you started coding on and never got back to them? I have heaps of ideas, started coding and after the first barrier thought I'll handle the problem later. I never fixed the problem and certainly never continued the implementation.
+
+I realised that this is a stupid way of writing software. I used to write functional specs based on <a href="http://www.joelonsoftware.com/articles/fog0000000036.html" target="_self">Joel Spolskys "Painless Functional Specifications"</a> during work and realised: writing a spec before you actually write any code makes absolute sense:
+<ul>
+	<li>you think about 60-70% of the details before you implement anything</li>
+	<li>while writing the spec, it raises other questions you haven't thought about in the first place</li>
+	<li>if you use a text format like <a href="http://en.wikipedia.org/wiki/ReStructuredText" target="_self">ReST</a>, you can reuse the scenarios in the spec for <a href="http://en.wikipedia.org/wiki/Doctest" target="_self">doctests</a></li>
+	<li>and - last but not least - you know after the spec that you want to implement the idea or not.</li>
+</ul>
+<p style="text-align:center;"><a title="Wonderland? by romanjoost, on Flickr" href="http://www.flickr.com/photos/romanofski/3983474114/"><img class="aligncenter" src="http://farm3.static.flickr.com/2423/3983474114_a61b8d2b9b_m.jpg" alt="Wonderland?" width="240" height="160" /></a></p>
+
+<h3>Motivation</h3>
+All the ideas I've come up with in the past had mostly one flaw: they lacked of a motivation. Even 50% of the packages and components I've seen <a href="http://pypi.python.org/pypi">on pypi </a>have this problem too. You'll find for example three apparently similar packages and think:
+<ul>
+	<li>What's the motivation that this piece of software exists in comparison to the others? What problem does it solve better or what does it do better?</li>
+</ul>
+A motivation should answer those questions. If I'm writing a new project, that will be one of the first questions I'll ask myself, before writing any code.
+
+For any new project I start from now on: No spec, no motivation: no code.

@@ -1,0 +1,26 @@
+---
+title: "Vimperator - a firefox add-on"
+tags: 
+---
+
+<p style="text-align:center;"><a title="dsc_0053.nef by romanjoost, on Flickr" href="http://www.flickr.com/photos/romanofski/3452125046/"><img class="aligncenter" src="http://farm4.static.flickr.com/3343/3452125046_edf59f0fd9.jpg" alt="dsc_0053.nef" width="500" height="333" /></a></p>
+
+For my daily text editing and programming work, I'm using <a title="vim homepage" href="http://vim.sf.net" target="_self">vim</a>. Great editor suitable for almost every purpose.
+
+There is a <a href="http://vimperator.org/trac/wiki/Vimperator" target="_self">Firefox add-on</a> out now for changing the browser interface to behave like a vim interface. It advertises itself that you can even throw away your mouse. First I was curious if that's gonna even work, but it does and I'm very happy with it. Although, I'm still using my mouse for browsing. It saves time not touching the mouse in a few cases, though. A few key features I use every day:
+<h3>Following links</h3>
+You press the '<strong>f</strong>' key and vimperator hints all links on the current webpage. No you press either the first letters of the link label or a number associated with the link.
+<h3>Navigating on a website</h3>
+You can just use the normal arrow keys for browsing, but there is more. As usual you can use '<strong>j</strong>' and '<strong>k</strong>' for scrolling up and down, as well as '<strong>space bar</strong>' for jumping a page down, or '<strong>gg</strong>' for jumping to the top, or '<strong>GG</strong>' for jumping to the bottom.
+<h3>Text editing</h3>
+Remember editing text areas without using your favourite editor? The times are over: Press <strong>CTRL+i</strong> in insert mode (you're automatically in insert mode when inserting text on an input field or text area) and vimperator fires up a vim. Very handy for editing large amounts of text in textareas.
+<h3>Opening URLs</h3>
+Just press '<strong>o</strong>' to open a new url, or '<strong>O</strong>' to use the current URL. You can easily open the url in a tab by using '<strong>t</strong>' or '<strong>T</strong>' instead. You can use yank and paste as well. Just pressing '<strong>y</strong>' on an opened web site, yanks the URL. If you're already a URL in the buffer, press '<strong>p</strong>' and the browser opens the link (like the middle mouse click). Very handy.
+
+You can also use tab for completing commands or URLs. For example you want to open the website you opened yesterday, but you only remember a few letters, You type: '<strong>o</strong>', enter '<strong>foo</strong>' and press <strong>tab</strong>. Vimperator shows a list of URLs matching your string. You can now tab and enter to the match and open the URL.
+<h3>Navigating between tabs ... err... buffers ;)</h3>
+Jumping between tabs is like jumping between buffers in vim. Use <strong>CTRL+n</strong> or <strong>CTRL+n</strong> for jumping to the next and previous tabs. It's similar to jumping in the history of visited pages: use <strong>CTRL+i</strong> or <strong>CTRL+o</strong> for back or forward in the history.
+
+That are the commands are use almost everyday for browsing. There is support for more features like macros and quickmarks and so forth. So if you're using vim everyday, give it a go. IMHO it's worth the speed for browsing you get.
+
+Before I forget: In case you need help to the features, use '<strong>:help</strong>' as usual for browsing the online help.

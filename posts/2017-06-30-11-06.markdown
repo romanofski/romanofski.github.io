@@ -1,0 +1,45 @@
+---
+title: "Debugging with RPM packages"
+tags: 
+- linux
+---
+
+With one of our internal web applications based on Ruby on Rails, we've discovered a file descriptor leak in one of the <a href="https://github.com/tobi/delayed_job">delayed job worker</a> processes. The worker leaked descriptors whenever it invoked a message being send to the message bus using <a href="http://qpid.apache.org/components/messaging-api/index.html">qpid-messaging</a>.
+
+Since we're using gems compiled <strong>as C++ and C extensions</strong>, in order to find the root cause, I used the packages provided through the package manager and gdb.
+
+Big thanks to <a href="https://github.com/danc86">Dan Callaghan</a> who walked me through most of the process and then found the leak in the C++ sources.
+
+TL;DR;
+<ul>
+	<li>identify the leaking descriptors and reproduce it with <code>lsof</code></li>
+	<li>attach <code>strace</code> to the process and identify file descriptors which are not being closed</li>
+	<li>install debuginfo packages for all dependencies</li>
+	<li>use <code>gdb</code> to figure out what is going on</li>
+</ul>
+<h3>Reproducer</h3>
+I've used <a href="https://en.wikipedia.org/wiki/Lsof">lsof</a> and a friend wrote a small script to quickly monitor the worker process. Looking at the opened files of the process revealed a long list which looked like <a href="https://idea.popcount.org/2012-12-09-lsof-cant-identify-protocol/" target="_blank" rel="noopener">half closed sockets.</a> It turned out later, that it wasn't the same problem since the sockets were created, but never bound/connected.
+
+I was unable to reproduce the problem on my local development environment, but found away to do it on our staging environment which resembles production much closer. So whenever I invoked an action in the UI which resulted in a message being sent, I was able to see another file descriptor leak with lsof.
+<h3>Strace the process</h3>
+With the reproducer at hand, I started to <a href="https://en.wikipedia.org/wiki/Strace">strace</a> the process:
+<pre># Note we're not filtering system calls with -e here.
+# Weirdly CLOSE was not reported when just filtering network calls
+strace -s 1000 -p  -o strace_output_log.strace</pre>
+Dan helped me looking through the produced log output, which revealed that the system under investigation created a socket and called <a href="http://man7.org/linux/man-pages/man2/getpeername.2.html" target="_blank" rel="noopener">getpeername</a> right after it, without binding it resulting in a leaked file descriptor.
+<pre>10971 socket(PF_INET, SOCK_STREAM, IPPROTO_IP) = 35
+10971 getpeername(35, 0x7fffae712a90, [112]) = -1 ENOTCONN (Transport endpoint is not connected)</pre>
+<h3>Install debuginfo packages and use gdb</h3>
+In order to debug the system, we need debuginfo packages installed, otherwise you wont be able to step through the sources using <a href="https://en.wikipedia.org/wiki/GNU_Debugger">gdb</a>. When you attach gdb to the process it will tell you what packages it is missing, for example:
+<pre>Missing separate debuginfos, use: debuginfo-install qpid-proton-c-0.10-3.fc25.x86_64</pre>
+You then go install those (be mindful that you the repositories configured e.g. section name fedora-debuginfo):
+<pre>debuginfo-install qpid-proton-c-0.10-3.fc25.x86_64</pre>
+and basically start debugging.
+
+Our first suspicion was the <a href="http://qpid.apache.org/components/messaging-api/">qpid messaging library</a> and we check if it's invocation of <code>getpeername</code> was leaking the file descriptors. I've added a break point at the point of the source code we thought was suspicious and in a separate terminal used <a href="https://linux.die.net/man/8/lsof">lsof</a> to see which file descriptor number is leaked. For example:
+<pre># I've used a watch, which executes the lsof every 2 seconds by
+# default. The grep filters some of the files I'm not interested in
+$ watch "lsof -p  | grep -v REG"</pre>
+The lsof output will show you the leaked file descriptor number in column 4 by default. With that you can check in gdb if the file descriptor being handled in the source code is the one which leaked.
+
+Since that achieved no results, we used gdb to break on invocations of the <code>getpeername</code> identifier and used backtrace to pin point in the sources where the leak occurred.

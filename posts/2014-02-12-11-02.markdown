@@ -1,0 +1,14 @@
+---
+title: "Abort a git commit --amend"
+tags: 
+- git
+---
+
+<h3>The situation</h3>
+You hack on a patch, add files to the index and with a knee jerk reaction do:
+<pre>git commit --amend</pre>
+(In fact, I do this in my editor with the <a href="https://github.com/tpope/vim-fugitive">vim-fugitive plug-in</a>, but it also happened in the terminal). For the commit message git places you in your text editor. If you quit, your changes are merged with the last commit. Being aware of your trapped situation, what do you do?
+
+<a href="https://secure.flickr.com/photos/romanofski/11811892293/"><img class="aligncenter" alt="" src="https://farm6.staticflickr.com/5491/11811892293_2c8af1a736_n.jpg" width="320" height="240" /></a>
+<h3>The solution</h3>
+<strong>Simply delete the commit message (up to where the comments start with #)</strong>. The typical git commit-hook will see it as a commit with an empty message and abort the commit and therefore the merge.

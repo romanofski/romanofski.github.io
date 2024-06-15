@@ -1,0 +1,14 @@
+---
+title: "If cookies come in the way..."
+tags: 
+- 400
+- Cookies
+- Kupu
+- Silva
+---
+
+I really had a strange error when I was recently browsing to my web site. The nginx web server returned a 400, which only happened to me with my main browser: Mozilla Firefox.
+
+[caption id="attachment_244" align="aligncenter" width="463" caption="The error message I saw, although I knew that my site was fine."]<a href="http://romanofskiat.wordpress.com/wp-content/uploads/2010/06/400badrequest.png"><img class="size-full wp-image-244" title="400badrequest" src="http://romanofskiat.wordpress.com/wp-content/uploads/2010/06/400badrequest.png" alt="400 bad request" width="463" height="205" /></a>[/caption]
+
+After investigating, I figured, that it was a cookie which was sent by my browser and apparently set by <a href="http://www.infrae.com/products/kupu_editor" target="_self">Kupu</a> during editing. If you find this weird behaviour for your site as well, check the cookies. The cookie name which led to my problem was: initial_state. <strong>Delete it</strong> and you should be able to browse to wherever you run into this error first.
