@@ -1,0 +1,8 @@
+---
+title: "Zope Testing Layers = a layer cake"
+tags: 
+---
+
+Every test will have setUp and tearDown methods, which can obviously be shared between similar tests. Those methods take care that you're testing in a well defined domain. Layers allow to share common setUp and tearDown methods to be shared among tests.
+
+For publications.nsw.gov.au, I've implemented a lot of doctests (which I now think was a mistake, but that is another story). All of them slowly became inflexible to manage, and I was aware of the chance to use Layers. My only problem was, that most of the documentation including the source code is very different to.

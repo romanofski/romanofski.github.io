@@ -1,0 +1,14 @@
+---
+title: "Sluggish guest machine performance with libvirt"
+tags: 
+- Fedora
+- libvirt
+---
+
+I'm currently running a few VMs using <a href="http://libvirt.org/drvqemu.html">libvirt</a> under Fedora 19. One problem I ran into with a new workstation was extremely sluggish performance. After consulting the interwebs, I found this <a title="KVM install" href="http://brezular.wordpress.com/2012/11/07/%EF%BB%BFkvm-installation-on-fedora/">great article.</a>
+
+You want to check two things:
+<ul>
+	<li>Is your architecture dependent kvm module loaded (e.g. kvm_intel). If not, and you can not load it check your BIOS settings if visualization is enabled.</li>
+	<li>Check your VM details under "Overview" which hypervisor is in use: kvm or qemu? Choosing kvm will most likely speed things up.</li>
+</ul>

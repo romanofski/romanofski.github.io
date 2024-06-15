@@ -1,0 +1,69 @@
+---
+title: "Using z3c.traverser"
+tags: 
+- multiadapter
+- traverser
+- traversing
+---
+
+One of the things which looked so hard, but reveiled using so easy was <a href="http://pypi.python.org/pypi/z3c.traverser/0.2.5" target="_self">z3c.traverser</a>. I'm sometimes a bit retarded reading doctests and applying them to my needs. For those who have the same problem, here a small example on how to use the traverser.
+<h2>The Muffin Traverser</h2>
+<h4>Motivation</h4>
+Our web application catalogues muffin recipes. Every bloody muffin shop in town has a login to our muffin-application and publishes recipes. To view such a recipe the URLs look like this:
+<pre>http://muffinsinthehouse.com/shop/recipes/bluemuffin</pre>
+Now, the customer who operates the site comes to us with a wish: please make the URLs shorter. Each recipe is created with a unique ID and I like to use this id to look up recipes like this:
+<pre>http://muffinsinthehouse.com/bluemuffin</pre>
+<h4>Implementation</h4>
+"No worries mate", you say and use z3c.traverser and implement a custom traverser. The code below shows your custom traverser plugin:
+<pre>import z3c.traverser.interfaces
+import zope.interface
+import zope.component
+import zope.publisher.interfaces
+import zope.app.catalog.interfaces
+
+class MuffinTraverserPlugin(object):
+    """Traverser which tries to lookup muffins in the database."""
+
+    zope.interface.implements(
+        z3c.traverser.interfaces.ITraverserPlugin)
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def publishTraverse(self, request, name):
+        catalog = zope.component.getUtility(
+            zope.app.catalog.interfaces.ICatalog)
+        result = catalog.searchResults(objectname=name, metatype='Recipe')
+        if not result:
+            raise zope.publisher.interfaces.NotFound(
+                self.context, name, request)
+        return result[-1].getObject()</pre>
+There is nothing really special here, if you know how traversal works in Zope. The plugin is a Multiadapter (a view), which implements z3c.traverser.interfaces.ITraverserPlugin. The object lookup for your muffins is happening in the publishTraverse method. This method either returns the object or raises a NotFound exception if it couldn't lookup the object. Easy as pie. The catalog is utilised to lookup the object and if its not found a NotFound error is raised.
+
+You register the plug-in with the following ZCML directive:
+<pre>&lt;adapter
+ factory="z3c.traverser.traverser.PluggableTraverser"
+ for="zope.traversing.interfaces.IContainmentRoot
+ zope.publisher.interfaces.IPublisherRequest"
+ /&gt;
+
+ &lt;subscriber
+ factory=".traversing.MuffinTraverserPlugin"
+ for="zope.traversing.interfaces.IContainmentRoot
+ zope.publisher.interfaces.IPublisherRequest"
+ provides="z3c.traverser.interfaces.ITraverserPlugin"
+ /&gt;
+</pre>
+The first directive "enables" z3c.traverser, the second registers your plugin. After that, try out the custom URL which should work. <strong>But wait</strong>, if you try to<strong> look up other objects in the database, you'll notice that your traverser deals with them too</strong>. That was not the plan, was it?
+
+z3c.traverser provides other plug-ins to deal with folders attributes etc. <strong>Don't lump all those object look-ups into your plug-in!</strong> You need to <strong>register them additionally</strong>:
+<pre>&lt;subscriber
+ factory="z3c.traverser.traverser.ContainerTraverserPlugin"
+ for="zope.traversing.interfaces.IContainmentRoot
+ zope.publisher.interfaces.IPublisherRequest"
+ provides="z3c.traverser.interfaces.ITraverserPlugin"
+ /&gt;</pre>
+Try again. This should satisfy the customer.
+
+Comments welcome ;)

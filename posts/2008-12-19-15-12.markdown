@@ -1,0 +1,20 @@
+---
+title: "svn merge weirdness"
+tags: 
+- gimp-help-2
+- merge
+- svn
+---
+
+I stumbled over a strange svn problem today, while merging the <a title="CVS View of gimp-help-2 xml2po-support branch" href="http://svn.gnome.org/viewvc/gimp-help-2/branches/xml2po-support/" target="_self">xml2po branch</a> into TRUNK:
+<pre>svn: Working copy path 'ChangeLog.pre-2-4' does not exist in repository</pre>
+[caption id="" align="alignright" width="100" caption="photo by zen Sutherland on flickr.com"]<a href="http://www.flickr.com/photos/zen/"><img title="Weirdness" src="http://farm1.static.flickr.com/16/20912387_37255ca22c_t.jpg" alt="photo by zen Sutherland on flickr.com" width="100" height="100" /></a>[/caption]
+
+I found two possible solutions in the net, but none of them seemed to work:
+<ol>
+	<li>"edit the ".svn/entries" file, and look for an incorrect revision="0" attribute, and set it to the correct value." ( see <a href="http://www.axlrosen.net/stuff/svnproblem.html" target="_self">http://www.axlrosen.net/stuff/svnproblem.html</a>)</li>
+	<li>"At this point, the only way I found to repair my working copy was to delete the directory containing the problematic file, check it out again [...]" (see <a href="http://svn.haxx.se/dev/archive-2006-03/0795.shtml" target="_self">http://svn.haxx.se/dev/archive-2006-03/0795.shtml</a>)</li>
+</ol>
+I checked the 'entries' file, but couldn't spot a 'revision' attribute at all. Solution two wouldn't work, or I had to wipe out the whole gimp-help-2 module.
+
+What I did now is to remove the files temporary (aprox. 10 files) and try again. I got the merge working afterwards. Although it is cumbersome, because you won't spot the erroneus file in a dry run.

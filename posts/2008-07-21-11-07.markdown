@@ -1,0 +1,17 @@
+---
+title: "GIMP Metadata Browser"
+tags: 
+- EXIF
+- metadata
+- XMP
+---
+
+[caption id="" align="alignleft" width="240" caption="Current GIMP metadata implementation showing XMP metadata of a sample image."]<a title="GIMP Metadata Editor by romanjoost, on Flickr" href="http://www.flickr.com/photos/romanofski/2689014720/"><img src="http://farm4.static.flickr.com/3207/2689014720_74b0c9c780_m.jpg" alt="GIMP Metadata Editor" width="240" height="218" /></a>[/caption]
+
+There was long silence about the Metadata Browser in GIMP. I'm currently trying to picking up the code which seems to float around since 2002. Raphaël Quinet worked on the metadata system for GIMP. There is an <a href="http://de.wikipedia.org/wiki/Extensible_Metadata_Platform" target="_self">Extensible Metadata Platform (XMP)</a> parser, code for reading <a href="http://de.wikipedia.org/wiki/Exif">EXIF</a> data and a UI for browsing metadata. But overall not finished, unfortunately. The development stopped, because of the lack of time to work on it.
+
+I'm trying now to change that. I currently do have a lot of time to work on it and I'm eager to polish my C/C++ skills. Currently I'm reading the code, trying to understand what it does and also reading the <a href="http://www.adobe.com/products/xmp/" target="_self">XMP spec published by Adobe</a>. I even had a look at <a href="http://libopenraw.freedesktop.org/wiki/Exempi" target="_self">exempi,</a> which seems to be the parser you want to use parsing metadata for binary files.
+
+<strong>The plan</strong>
+
+The current plan is to provide a read only view for the metadata attached to the image including XMP and EXIF metadata (similar as shown in the screenshot). Plain EXIF data is currently not displayed in the metadata browser. It needs to be converted to XMP:exif metadata and merged with the XMP data already found in the image data. That's my part I'm currently trying to implement.

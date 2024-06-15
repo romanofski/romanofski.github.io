@@ -1,0 +1,22 @@
+---
+title: "My own stupidity"
+tags: 
+- doh
+- stupidity
+---
+
+<img style="float:right;margin:0 0 10px 10px;" src="http://farm1.static.flickr.com/56/169523731_c5f4d624f6_m.jpg" alt="sign" />Even as an experienced Linux user I sometimes fall into traps which reveals my own stupidity.
+
+I tried to setup my <a href="http://de.wikipedia.org/wiki/SMIME">smime</a> configuration today to use it with my mailer. The command involved in it was smime_keys. This command had a little bug. A small workaround was posted on the <a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=453845">debian bugs mailinglist</a>:
+<pre>vsauer@zaphod: ~ &gt; ln -s . "~"
+vsauer@zaphod: ~ &gt; l -tr "~"</pre>
+The workaround just creates a link to your own home directory to fool the smime_keys program (What a stupid hack actually).
+
+What happened now, was the fact, that I stopped fixing the not working smime_keys program, because I had other things todo. I removed the link I created by using the workaround above:
+<pre>rm -rf ~</pre>
+Everyone who know how to interprete this command can laugh now ;) Fortunately I was lucky - phew.
+<div class="flockcredit" style="text-align:right;color:#CCC;font-size:x-small;">Blogged with the <a title="Flock Browser" href="http://www.flock.com/blogged-with-flock" target="_new">Flock Browser</a></div>
+<!-- technorati tags begin -->
+<p style="font-size:10px;text-align:right;">Tags: <a rel="tag" href="http://technorati.com/tag/doh">doh</a>, <a rel="tag" href="http://technorati.com/tag/stupidity">stupidity</a></p>
+
+<!-- technorati tags end -->

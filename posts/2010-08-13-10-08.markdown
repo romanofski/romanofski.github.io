@@ -1,0 +1,17 @@
+---
+title: "If acquisition comes in the way"
+tags: 
+- Error
+- Plone
+- python
+---
+
+I've witnessed a very strange error today.
+<h2>The problem</h2>
+I had a custom content-type which was partly indexed. When viewing the content type, parts of the edit form showed raw HTML code instead of widgets:<a href="http://romanofskiat.wordpress.com/wp-content/uploads/2010/07/profile-error.png"><img class="aligncenter size-medium wp-image-261" title="profile-error" src="http://romanofskiat.wordpress.com/wp-content/uploads/2010/07/profile-error.png?w=300" alt="" width="300" height="193" /></a>
+
+What was going on?
+<h2>The solution</h2>
+I hunted around for a while but <strong>checked the contents of the index</strong>. Strangely, it had a whole page indexed. After investigating further: <strong>it's another object in the portal with the same id as the attribute on the content-type</strong>. The error happens only, if the attribute is missing on the content-type and an object in the hirarchy above has the name id.
+
+So - if you encounter a problem like this, <strong>check if the portal_catalog may grab a different object for indexing with the same name of your attribute</strong>.

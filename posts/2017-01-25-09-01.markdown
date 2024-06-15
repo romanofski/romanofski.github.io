@@ -1,0 +1,10 @@
+---
+title: "Changing a website using the developer console"
+tags: 
+---
+
+If you need to quickly change a website, you can use a combination of CSS/XPath selectors and a function to hide/remove DOM nodes. I had to find my way through a long list of similar items which was really hard to go through by simply looking at it.
+
+For example, you can simply delete all links you're not interested in by a simple combination of selector and function:
+<pre>$x('//li/a[contains(., "not-interesting")]').map(function(n) { n.parentNode.removeChild(n) })</pre>
+If you've made a mistake, reload the website.

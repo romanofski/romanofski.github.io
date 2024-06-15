@@ -1,0 +1,16 @@
+---
+title: "Touché"
+tags: 
+- doh
+- shell
+---
+
+I just ran into a problem in which I got myself cornered. I've edited a configuration file with elevated permission using sudo:
+<pre>sudo vim /etc/httpd/conf.d/metrics.conf</pre>
+From time to time when editing, I background the vim session in order to perform some commands in the shell, then continue working in vim. This time, I've sent the editor into the background. When trying to foreground it I got this:
+<pre>~/Metrics(branch:bug_947304*) » fg
+[1]  + 11403 continued  sudo vim /etc/httpd/conf.d/metrics.conf
+[1]  + 11403 suspended (tty input)  sudo vim /etc/httpd/conf.d/metrics.conf</pre>
+What? How? When? Any attempt to foreground this process failed. Reason was the elevated permission I've started the editor with. Long story short, you'll need to kill the editor in order to get back into editing. This mailing list thread <a href="http://comments.gmane.org/gmane.org.user-groups.linux.gnhlug/8015">explains why.</a>
+
+<a href="http://www.flickr.com/photos/romanofski/4233434268/"><img class="aligncenter" alt="" src="http://farm3.staticflickr.com/2184/4233434268_05f7140559_n.jpg" width="213" height="320" /></a>

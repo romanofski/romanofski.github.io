@@ -1,0 +1,18 @@
+---
+title: "I love eboy ..."
+tags: 
+- eboy
+- pixelgrafics
+---
+
+They published a new poster again. Great:
+<div>
+
+<img class="alignnone size-full wp-image-1609" src="http://hello.eboy.com/eboy/wp-content/uploads/2008/05/la_poster.png" alt="la_poster" width="454" height="363" />
+
+</div>
+<a href="http://hello.eboy.com/eboy/2008/05/08/new-la-poster-now-available/">View Original Article</a>
+<div class="flockcredit" style="text-align:right;color:#CCC;font-size:x-small;">Blogged with the <a title="Flock Browser" href="http://www.flock.com/blogged-with-flock" target="_new">Flock Browser</a></div>
+<!-- technorati tags begin -->
+<p style="font-size:10px;text-align:right;">Tags: <a rel="tag" href="http://technorati.com/tag/eboy">eboy</a>, <a rel="tag" href="http://technorati.com/tag/pixelgraphics">pixelgraphics</a></p>
+<!-- technorati tags end -->

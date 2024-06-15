@@ -1,0 +1,11 @@
+---
+title: "GIMP Tips Dialog"
+tags: 
+- gimp-help-2
+---
+
+[caption id="attachment_42" align="alignleft" width="300" caption="The tips-dialog now provides a link to show more information in the user manual. Don&#39;t bother - the dialog has already been internationalized and has either only English or only German strings."]<a href="http://romanofskiat.wordpress.com/wp-content/uploads/2008/08/tips_revamped.png"><img class="size-medium wp-image-42" src="http://romanofskiat.wordpress.com/wp-content/uploads/2008/08/tips_revamped.png?w=300" alt="The tips-dialog now provides a link to show more information in the user manual." width="300" height="137" /></a>[/caption]
+
+<a href="http://www.holoweb.net/~liam/" target="_self">Liams</a> Idea made it into <a href="http://www.gimp.org" target="_self">GIMP</a>: the tips dialog now provides a link to more information in the user manual which covers the topic displayed as a tip.
+
+I liked the idea providing a button which links to the manual and started hacking. <a href="http://www.flickr.com/photos/romanofski/2705643131/" target="_self">My first attempt used a third button</a> in the dialog. <a href="http://www.mmiworks.net/eng/publications/blog.html" target="_self">Peter Sikking</a> disagreed with a third button. The buttons become to prominent in the dialog and a link should be displayed. <a href="http://svenfoo.geekheim.de/" target="_self">Sven</a> helped in providing useful development information. This feature will be available in the next stable release of GIMP (2.6).

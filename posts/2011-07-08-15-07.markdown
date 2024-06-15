@@ -1,0 +1,12 @@
+---
+title: "What not to do"
+tags: 
+---
+
+<ul>
+	<li>Don't tell me important information about a new project, when you put me on other projects for the next weeks.</li>
+	<li>Know and use your tools as much as you can and not only 10% of it's functionality.</li>
+	<li>There is a difference between a bug tracker, project management and ticket management.</li>
+	<li>If you always need to ask your developers about a status update of the project, you are missing the point of a project management system which you have in place</li>
+	<li>Documentation can not replace the experience of a developer which is lost when he leaves the company</li>
+</ul>

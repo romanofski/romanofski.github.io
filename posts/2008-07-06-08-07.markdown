@@ -1,0 +1,48 @@
+---
+title: "GIMP Manual Future Decisions"
+tags: 
+- gimp-help-2
+- publican
+- waf
+---
+
+[wp_caption id="attachment_24" align="alignleft" width="300" caption="GIMP Help Browser using webkit."]<a href="http://romanofskiat.wordpress.com/wp-content/uploads/2008/07/helpbrowser.png"><img class="size-medium wp-image-24" src="http://romanofskiat.wordpress.com/wp-content/uploads/2008/07/helpbrowser.png?w=300" alt="GIMP Help Browser using webkit." width="300" height="207" /></a>[/wp_caption]
+
+<span style="font-weight:bold;">Help Browser Improvements</span>
+I'm very happy about <a href="http://lists.xcf.berkeley.edu/lists/gimp-docs/2008-July/001217.html">Svens</a> changes for the next stable version of <a href="http://www.gimp.org">GIMP (2.6)</a>. The help browser uses now <a href="http://webkit.org/">webkit</a> to render the manual and can even now load the manual from the net if the user have an internet connection. I think that'll make the access to our manual more easier for the most of GIMP users.
+
+<span style="font-weight:bold;">Manual switches to gettext
+</span>The user manual is written using <a href="http://www.docbook.org/">DocBook/XML.</a> The translation is seperated by 'lang' attributes. There is no reference language. Therefore the manual is written in various languages, seperated by 'lang' attributes.
+
+We're currently working hard to figure out a possible migration strategy of the current manual to <a href="http://en.wikipedia.org/wiki/Gettext">gettext.</a> Our build system need to be customized to manage the translations hold in *.po files. There are currently two possible candidates for this:
+<ul>
+	<li><a href="https://fedorahosted.org/publican">Publican</a></li>
+	<li><a href="http://code.google.com/p/waf/">WAF</a></li>
+</ul>
+<span style="font-weight:bold;">Publican</span> provides a lot of the functionality we need to update/manage the translations. So has a very specific purpose. It uses the automake/autotool build system, we're using as well. It is written by people at Red-Hat and can compile hundreds of manuals in the row. Ulf D. Ehlert and I elaborated a possible migration to publican and we figured a few pros and cons:
+
+Pro:
+<ul>
+	<li>provides all the functionality needed to manage and build documentation using gettext</li>
+</ul>
+Contra:
+<ul>
+	<li>complete switch to Publican and be dependant from it</li>
+	<li>feels like we won't need most of the functionality implemented to compile all (other manuals)</li>
+</ul>
+<span style="font-weight:bold;">WAF</span> though is a build system written in Python. It's ment to replace the currently widely automake/autotools toolchain, which is currently widely in use by a lot of open source projects.
+Pro:
+<ul>
+	<li>It's easier to understand and can better handle the complex process of building and installing our manual. I find it sometimes very cumbersome to express what the autotools/automake should do using bash expressions. I find it much easier to do this in Python or any other high level language than bash (don't misunderstand me: bash is fine for batch processing).</li>
+</ul>
+Contra:
+<ul>
+	<li>WAF uses tools to provide configuring/building software. There seems to be no such tool available which provides the functionality to build our manual. We probably need to write our own tool. Not a problem though, but we need to do it and it will cost time.</li>
+	<li>"Not compatible" to our GIMP/GNOME (modules) which use automake/autotools.</li>
+</ul>
+I will try to write a build script for our purpose using WAF and I also want to communicate more with the publican people. I think this will sort out our current "problems" choosing a system.
+
+Well, could be, that I overlooked or misunderstood something elaborating those tools. I'm sorry if something is not correct, while I was checking.
+
+<strong>Update: </strong>Ulf sent me already a patch based on autotools/automake, which uses a bit of the publican infrustructure. Think that points out the direction where we're heading now :)
+<div class="flockcredit" style="text-align:right;color:#CCC;font-size:x-small;">Blogged with the <a title="Flock Browser" href="http://www.flock.com/blogged-with-flock" target="_new">Flock Browser</a></div>

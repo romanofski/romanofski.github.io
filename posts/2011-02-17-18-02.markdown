@@ -1,0 +1,52 @@
+---
+title: "Running Selenium tests without X11"
+tags: 
+- hacking
+- testing
+---
+
+<strong>Update:</strong> Most likely my scripts for download will lead into a dead end. Please check the github repository posted by one of my commentators: <a href="https://github.com/amenk/SelfScripts/blob/master/selenium-headless" rel="nofollow">https://github.com/amenk/SelfScripts/blob/master/selenium-headless</a>
+
+Because writing tests with <a href="http://pypi.python.org/pypi/zope.testbrowser" target="_blank">zope.testbrowser</a> can sometimes be a pain, I recently got a hint from <a href="http://www.gocept.com" target="_blank">Christian Zagrodnick</a> to have a look back on Selenium again. <a href="http://seleniumhq.org/" target="_blank">Selenium</a> plays a pre-recorded, or scripted session to test your web-application in a browser: click here, verify if 'hello world' is present, click there and so forth. It's bit like driving with hands off the steering wheel.
+
+<a title="Eleanor Schonell Bridge by romanjoost, on Flickr" href="http://www.flickr.com/photos/romanofski/5348902916/"><img class="alignright" alt="Eleanor Schonell Bridge" src="http://farm6.static.flickr.com/5284/5348902916_5c45bbab53_m.jpg" width="160" height="240" /></a>
+
+Now, I remember having used Selenium before, but
+<ul>
+	<li>it was a nuissance to setup, esp to work nicely with a <a href="http://pypi.python.org/pypi/Products.PloneTestCase" target="_blank">Plone TestCase</a></li>
+	<li>getting it setup in a continous integration environment was quite some work too.</li>
+</ul>
+<h2>Motivation</h2>
+With Plone 4, a <a href="http://pypi.python.org/pypi/plone.app.testing/4.0a4" target="_blank">new testcase component </a>is implemented which made it much, much, much easier to write tests for Plone packages. The <a href="http://pypi.python.org/pypi/gocept.selenium/0.10.1" target="_blank">gocept.selenium</a> packages wraps Selenium in a nice compatible package and provides test classes for Zope2, Plone and Zope3 tests. The result is, that the setup and maintainance of tests with selenium became much, much easier as well.
+
+The only missing piece was the continious integration (CI) environment. I'm running all tests of the packages I develop at <a href="http://www.mooball.com" target="_blank">Mooball</a> in <a href="http://www.hudson-ci.org" target="_blank">Hudson</a> continously. Being also able to run all Selenium tests would be a <strong>big, big plus</strong>. But without an X server, you can't run a browser, which is essential to run the tests.
+
+I didn't like the idea of installing a complete X environment on my CI server, so I searched around and found these articles to run Selenium tests without requiring a complete X server installed:
+<ul>
+	<li><a title="Hudson and SeleniumTest Suite" href="http://oshyn.com/_blog/Software_Development/post/Hudson-Selenium-Test-Suite/">Hudson and SeleniumTest Suite</a></li>
+	<li><a href="http://shotgunsandpenguins.blogspot.com/2008/10/how-to-run-selenium-tests-with-hudson.html">How To: Run Selenium Tests with Hudson on a Headless Linux Server, Part One--Xvfb</a></li>
+</ul>
+There are more around, but they helped me getting started.
+<h2>Problem</h2>
+My main questions were:
+<ol>
+	<li>How to run the selenium server? Start the server for each build or leave it running as a daemon in the background?</li>
+	<li>Run an X server (e.g. Xvfb) or an X server with a VNC server, because Hudson already provides plug-ins for the VNC server?</li>
+	<li>Run the X server per build or leave it running in the background?</li>
+</ol>
+<p style="text-align:center;"><a title="Yeh - at night the wheel spins faster ;) by romanjoost, on Flickr" href="http://www.flickr.com/photos/romanofski/5311280056/"><img class="aligncenter" alt="Yeh - at night the wheel spins faster ;)" src="http://farm6.static.flickr.com/5009/5311280056_7b3d32d766_m.jpg" width="240" height="160" /></a></p>
+
+<h2>My Solution</h2>
+<h3>1. Selenium Server</h3>
+I configured the selenium server to run as a daemon. Starting/Stopping the server per test would be too resource intensive and perhaps unreliable. <a href="http://www.romanofski.de/selenium-server.sh">So I came up with a small init script</a>. It allows me to start the selenium server at boot time and keep it running.
+<h3>2. + 3. The X Server</h3>
+I opted for installing <a href="http://en.wikipedia.org/wiki/Xvfb">Xvfb</a> and thought first about starting/stopping it per build, but here again, I think it becomes a nuisance and too unreliable if the server for whatever reason doesn't start up or crashes.<a href="http://www.romanofski.de/xvfb-server.sh"> I created another init script to keep the Xvfb running</a>. <strong>Note</strong> though, I don't disable the access permissions to connect to Xvfb as most of the other blog articles do.
+<h3>Installation</h3>
+The installation is actually pretty much straight forward:
+<ol>
+	<li>Install java and selenium-server (I preferred /opt)</li>
+	<li>Configure the init script variables (port, paths, browser, etc). I for one prefer to run firefoxchrome, which works fine for me.</li>
+	<li>Install Xvfb and adjust the init script variables.</li>
+	<li>Start both servers. If you're running your tests with <a href="http://pypi.python.org/pypi/gocept.selenium/">gocept.selenium, follow the installation instructions on the packages pypi page.</a></li>
+</ol>
+That's it. Any suggestions and updates are welcome :)

@@ -1,0 +1,38 @@
+---
+title: "Broken (Arche-)Type Installation in Tests"
+tags: 
+- Plone
+---
+
+I've recently run into this issue, migrating some of the Plone 3 product code to Plone 4. Installing some of the old types in my tests ended in a
+
+<code>
+File "/projects/plone3/my.product/my/product/tests/test_users.py", line 19, in test_mycontent
+self.portal.invokeFactory('GalleryFolder', 'spam', title='eggs')
+[...]
+File "/home/roman/.buildout/eggs/Products.CMFCore-2.2.4-py2.6.egg/Products/CMFCore/TypesTool.py", line 311, in constructInstance
+raise AccessControl_Unauthorized('Cannot create %s' % self.getId())
+<strong> Unauthorized: Cannot create GalleryFolder</strong>
+</code>
+
+<a href="http://www.flickr.com/photos/romanofski/6490723427/in/photostream/"><img class="alignleft" title="Find the needle in the haystack" src="http://farm8.staticflickr.com/7012/6490723427_598fc1680e_m.jpg" alt="" width="240" height="160" /></a>Digging deeper I found out, that all of the product factories were gone. Any debugging finding the cause of this ended up in a nowhere, until I stumbled over some odd behavior. All my imports in the testing.py are sorted, e.g.:
+
+<code>
+from Products.CMFPlone.tests.utils import MockMailHost
+from Products.MailHost.interfaces import IMailHost
+from Products.SiteErrorLog.SiteErrorLog import SiteErrorLog
+[...]
+import zope.component
+</code>
+
+What I now found out by accident is, if you move the import of the MockMailHost to the end of the import block, your Archetypes types are installable again:
+
+<code>
+from Products.MailHost.interfaces import IMailHost
+from Products.SiteErrorLog.SiteErrorLog import SiteErrorLog
+[...]
+import zope.component
+<span style="color:#ff0000;"> from Products.CMFPlone.tests.utils import MockMailHost</span>
+</code>
+
+I currently don't know why, but if anyone had the time to check, I'd be happy to know.

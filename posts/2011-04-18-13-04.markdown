@@ -1,0 +1,40 @@
+---
+title: "Buildout Entry 'default' missing?"
+tags: 
+- hacking
+- python
+---
+
+I recently ran into the following issue with a Plone 3.3.4 buildout:
+<pre>While:
+  Installing.
+  Getting section instance.
+  Initializing section instance.
+  Loading zc.buildout recipe entry plone.recipe.zope2instance:default.
+
+An internal error occured due to a bug in
+either zc.buildout or in a recipe being used:
+Traceback (most recent call last):
+  [...]
+  File "/home/roman/.buildout/eggs/
+        zc.buildout-1.4.3-py2.4.egg/zc/buildout/buildout.py",
+        line 1009, in _install_and_load
+    return pkg_resources.load_entry_point(
+  File "build/bdist.linux-x86_64/egg/pkg_resources.py",
+        line 305, in load_entry_point
+  File "build/bdist.linux-x86_64/egg/pkg_resources.py",
+        line 2243, in load_entry_point
+ImportError: Entry point ('zc.buildout', 'default') not found</pre>
+I tried to recompile my python 2.4 (because the OS was just newly installed and my lack on a few dev libraries), pin to different buildout versions but <strong>couldn't figure out what was wrong in the finish</strong>.
+
+What I ended up doing in the finish, was:
+<ol>
+	<li>remove my shared buildout directory (e.g. $HOME/.buildout)</li>
+	<li>rerun a buildout, which created the eggs directory in the buildout directory which seem to work fine</li>
+	<li>canceled the local buildout run,</li>
+	<li>recreated the shared buildout directory with my default configuration (e.g. $HOME/.buildout, $HOME/.buildout/default.cfg and $HOME/.buildout/eggs)</li>
+	<li>rerun the buildout now using the global eggs directory (e.g. $HOME/.buildout/eggs)</li>
+</ol>
+Another thing which I've noticed, is that zc.buildout does not have a 'default' entry point. I checked releases of zc.buildout back to 1.0. I wonder why it seems to be so arbitrarily being loaded that it works sometimes and sometimes not.
+
+Ah ... and btw. always a good one: Sometimes removing the .installed.cfg (it's hidden with a dot in front!) helps as well.

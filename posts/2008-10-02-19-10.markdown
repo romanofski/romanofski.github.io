@@ -1,0 +1,16 @@
+---
+title: "GIMP 2.6 is out ..."
+tags: 
+- docbook
+- gimp-help-2
+---
+
+[caption id="attachment_24" align="alignleft" width="127" caption="GIMP Help Browser using webkit."]<a href="http://romanofskiat.wordpress.com/wp-content/uploads/2008/07/helpbrowser.png"><img class="size-thumbnail wp-image-24" title="helpbrowser" src="http://romanofskiat.wordpress.com/wp-content/uploads/2008/07/helpbrowser.png?w=127" alt="GIMP Help Browser using webkit." width="127" height="88" /></a>[/caption]
+
+... and the <a href="http://docs.gimp.org" target="_self">Manual</a> will be next.
+
+The current plan is to release the last tarball of the manual suitable for the GIMP 2.4 release a.s.a.p. It should still be installed by most of the desktops until GIMP 2.6 is provided by the distributions.
+
+We're currently still working heavily to migrate most of the translations from DocBook/XML to po/gettext. The biggest problem for us is the missing 1:1 mapping between reference language to a translation. We're trying to minimize the site effects when splitting the translations and using xml2po's reuse option for a content migration. Ulf D. Ehlert <a href="http://lists.xcf.berkeley.edu/lists/gimp-docs/2008-September/001278.html" target="_self">wrote a Python script</a>, which will splitt the reference language from the translation <a href="http://svn.gnome.org/viewvc/gimp-help-2/branches/xml2po-support/tools/split_xml_multi_lang.py?revision=2568&amp;view=markup" target="_self">"as good as possible".</a>
+
+As long this script is ready and we're able to migrate, we're up to speed to document GIMP 2.6.

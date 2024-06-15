@@ -1,0 +1,15 @@
+---
+title: "Why contributing to documentation is important"
+tags: 
+---
+
+Do you know phrases like: "No documentation is better than bad documentation.". The problem is though, that most documentation starts of as bad documentation, since it's mostly written by the author of the software itself.
+The problem he faces: he doesn't know what the user doesn't know. Think about documentation like this screwdriver set: when you write it, it's incomplete.
+You test your documentation and perhaps add a few more missing pieces. Still not complete.
+
+If you now say the documentation is crap because it's incomplete you're stating the obvious. The writer knows that.
+Xxx
+Incomplete documentation like missing pieces in screwdriver set
+People who know about the stuff know where to look for the missing pieces
+Criticising incomplete documentation states the obvious.
+By not contributing to it, you find some of the missing pieces but keep it for yourself not contributing back

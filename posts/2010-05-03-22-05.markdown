@@ -1,0 +1,16 @@
+---
+title: "Ubuntu Lucid doesn't speak Japanese"
+tags: 
+- lucid
+- Ubuntu
+---
+
+Trying to get Japanese input working on <strong>Ubuntu (Lucid)</strong>? The conversion between different scripts is not working? It's probably because of a <strong>missing package: ibus-anthy</strong>.
+
+I had a fresh installation today and just couldn't figure out why it didn't worked, if you wanted to convert between e.g. hiragana to kanji. All the settings look fine, you've chosen the correct input methods (Japanese-anthy) and also verified that the environment variables are set for starting ibus correctly. But still - no working setup. Usually the screen-shot illustrates what you expect to see when typing:
+<p style="text-align:left;"></p>
+
+
+[caption id="attachment_223" align="aligncenter" width="500" caption="The little contextmenu is what you expect to see in case you have a working ibus setup."]<a href="http://romanofskiat.wordpress.com/wp-content/uploads/2010/05/ibus.png"><img class="size-full wp-image-223 " title="ibus" src="http://romanofskiat.wordpress.com/wp-content/uploads/2010/05/ibus.png" alt="" width="500" height="209" /></a>[/caption]
+
+<strong>The usual workflow goes like this</strong>: You enter text in hiragana, by hitting space you cycle through all alternatives the little context-menu shows. Pretty handy actually, but not if you don't see the context-menu and no conversion happens. Most of the documentation online is either in Japanese or deprecated. It took me a while to figure out, that I just had to <strong>install ibus-anthy</strong>, because it wasn't <strong>installed by default</strong>.

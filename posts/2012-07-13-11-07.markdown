@@ -1,0 +1,30 @@
+---
+title: "Stopp Making Things Work!"
+tags: 
+---
+
+How do you know, what you don't know?
+You don't know, but I think I came at least a step closer to know when you should get back to the drawing board and do your homework. It has something to do we fall into, when facing deadlines or being simply lazy: <strong>we make things work</strong>.
+
+When we make things work we're no longer interested in the quality of the solution, but in any solution which resembles the outcome we desire. Abominations are created like these:
+
+<a href="http://thereifixedit.failblog.org"><img class="alignnone" title="Shower" src="http://thereifixedit.files.wordpress.com/2012/07/9wugycyyl0wbr50oh9fmsw2.jpg" alt="" width="468" height="534" /></a>
+<a href="http://thereifixedit.failblog.org/"><img class="alignnone" title="There I fixed it" src="http://thereifixedit.files.wordpress.com/2012/07/j95ogi50leurj_vzquxjdg2.jpg" alt="" width="480" height="640" /></a>
+<img class="alignnone" title="Light Fixtures" src="http://thereifixedit.files.wordpress.com/2012/07/cp_wcgupfumg4pxz49tcmg2.jpg" alt="" width="500" height="667" />
+
+So it happens all the time. Horrible. Sometimes making things work can even blow up rockets.
+
+A few rules of thumb I used to use when I try to make things work:
+<ul>
+	<li>If you make things work, you haven't understood the problem or you're trying to tackle a problem to big. Try to break it down e.g. with <a href="http://en.wikipedia.org/wiki/Divide_and_conquer_algorithm" title="divide and conquer">Divide and Conquer</a></li>
+	<li>If you can't explain why your solution "works", chance are high, that you "made it work"</li>
+	<li>Just because "it works", doesn't mean it's good. Stop defending the solution.</li>
+</ul>
+I think "making things work" is not good enough and it's always a good excuse to be lazy. Some obstacles need to be solved properly. Learn from it and it makes you a better programmer.
+
+What is worse though, is when we talk about "working" implementations. This may sound like nit picking, but I think it clouds two different cases:
+<ol>
+	<li>A user my refer to a program that works, simply by the absence of any obvious defects which prevents him from working.</li>
+	<li>In software development though, it "working" refers to <strong>no defects</strong> and the code executes in a way we want it to.</li>
+</ol>
+Both a separate things as you can see, and if you use them as synonyms it can confuse people.

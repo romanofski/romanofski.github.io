@@ -1,0 +1,14 @@
+---
+title: "Ansible Variables all of a Sudden Go Missing?"
+tags: 
+- deployment
+- linux
+- python
+---
+
+I've written a playbook which deploys a working development environment for some of our internal systems. I've tested it with various versions of <a href="https://en.wikipedia.org/wiki/RHEL">RHEL</a>. Yet when I ran it against a fresh install of <a href="https://en.wikipedia.org/wiki/Fedora_%28operating_system%29">Fedora</a> it failed:
+<pre>fatal: [192.168.1.233] =&gt; {'msg': "One or more undefined variables: 'ansible_lsb' is undefined", 'failed': True}</pre>
+It turned out, that ansible gets it's facts through different programs on the remote machine. If some of these programs are not available (in this instance it was <code>lsb_release</code>) the variables are not populated resulting in this error.
+
+So check if all variables you access are indeed available with:
+<pre>$ ansible -m setup &lt;yourhost&gt;</pre>

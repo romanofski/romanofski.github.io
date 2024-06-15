@@ -1,0 +1,30 @@
+---
+title: "Start request repeated too quickly"
+tags: 
+---
+
+If one of your units is not running any more and you find this in your journal: 
+<pre>
+
+● getmail.service - getmail
+Loaded: loaded (/home/rjoost/.config/systemd/user/getmail.service; enabled; vendor preset: enabled)
+Active: failed (Result: start-limit-hit) since Thu 2018-11-29 18:42:17 AEST; 3s ago
+Process: 20142 ExecStart=/usr/bin/getmail --idle=INBOX (code=exited, status=0/SUCCESS)
+Main PID: 20142 (code=exited, status=0/SUCCESS)
+
+Nov 29 18:42:17 bali systemd[3109]: getmail.service: Service hold-off time over, scheduling restart.
+Nov 29 18:42:17 bali systemd[3109]: getmail.service: Scheduled restart job, restart counter is at 5.
+Nov 29 18:42:17 bali systemd[3109]: Stopped getmail.
+Nov 29 18:42:17 bali systemd[3109]: getmail.service: Start request repeated too quickly.
+Nov 29 18:42:17 bali systemd[3109]: getmail.service: Failed with result 'start-limit-hit'.
+Nov 29 18:42:17 bali systemd[3109]: Failed to start getmail.</pre>
+
+it might be because your command really exits immediately and you may want to run the command manually to verify if that's the case. Also check if you indeed have the unit configured with <pre>Restart: always</pre>.
+
+I you're sure it really does not restart too quickly, you can reset the counter with:
+
+<pre>
+$ systemctl reset-failed unit
+</pre>
+
+Further information can be found in the man pages of: systemd.unit(5) and systemd.service(5)

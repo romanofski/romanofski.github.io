@@ -1,0 +1,14 @@
+---
+title: "The Zen of"
+tags: 
+---
+
+<ul>
+	<li>What would the client want to see? Step back for 15 minutes to think about it but not longer.</li>
+	<li>Allow a huge gap between things you say and do.</li>
+	<li>Avoid every good practice you can find. Standardization is business suicide.</li>
+	<li>Apply the same concepts you are comfortable on to new technology with the hope to learn something new.</li>
+	<li>Divert from internal processes: use an e-mail with tasks instead of tracking them in a ticketing system.</li>
+	<li>Demand respect from your employees.</li>
+	<li>Always use exceptions in your arguments.</li>
+</ul>

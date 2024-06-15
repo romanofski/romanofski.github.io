@@ -1,0 +1,11 @@
+---
+title: "GIMP for Absolute Beginners"
+tags: 
+---
+
+"Write a book" was always on my list to do. Well, here it is:
+<a href="http://www.apress.com/9781430231684" title="Apress"><img alt="" src="http://www.apress.com/media/catalog/product/cache/9/image/9df78eab33525d08d6e5fb8d27136e95/A/9/A9781430231684-3d_8.png" title="GIMP for Absolute Beginners" class="alignright" width="277" height="350" /></a>
+The book focuses primarily on people who have no understanding of GIMP and digital image manipulation. That said, a few chapters also help you getting your graphics tablet setup and painting with GIMP. Most of the examples have been written with a MS Windows installation of GIMP. Don't worry though, I was testing most of the examples under my GNU/Linux (Ubuntu) installation as well.
+
+<a href="http://curpheymedia.com/" title="Jan Smith">Jan Smith</a> is the main author of the book. I like to thank Jan again for her countless effort to get this book published.
+You can order the book from <a href="http://www.apress.com/9781430231684" title="Apress">Apress</a> or your favorite book dealer.

@@ -1,0 +1,26 @@
+---
+title: "Docker volume mount fails"
+tags: 
+---
+
+I recently stumbled over this odd error message in one of our gitlab runners:
+<code>
+ERROR: for nginx_proxy  Cannot start service load_balancer: OCI runtime create failed: container_linux.go:348: starting container process caused "process_linux.go:402: container init caused \"rootfs_linux.go:58: mounting \\\"/builds/group/project/nginx/nginx.conf\\\" to rootfs \\\"/data/docker/overlay2/88fb8a0ee201dd14cfc9aa9befe4d7a5eb28e5ec816a2d76726040316853ed11/merged\\\" at \\\"/data/docker/overlay2/88fb8a0ee201dd14cfc9aa9befe4d7a5eb28e5ec816a2d76726040316853ed11/merged/etc/nginx/nginx.conf\\\" caused \\\"not a directory\\\"\"": unknown: Are you trying to mount a directory onto a file (or vice-versa)? Check if the specified host path exists and is the expected type
+</code>
+
+It is the result of using the <code>docker-compose up myservice</code> command which is defined to use just an image and mounts files like so:
+<code>
+- ./nginx/nginx.conf:/etc/nginx/nginx.conf
+</code>
+
+I've spent a bit of time figuring out what the underlying problem is. In hindsight, the error message already gives it away, but I was unable to reproduce the issue on my host machine. That is because the problem is actually more related to docker than your host.
+
+When I found out, that the runner in gitlab is actually a <a href="https://docs.gitlab.com/runner/executors/docker.html">docker container</a>, it dawned upon me, that the operation we do here is a container-in-a-container operation.  The container typically shares the same docker instance with the host system. The bind <a href="https://linux.die.net/man/8/mount">mount</a> actually happens on the host machine. It tries to mount the path from a directory/file which doesn't exist on the host machine.
+
+To verify if we can reproduce the same error on the host, I tried to bind mount a volume with a path which doesn't exist and voila:
+<code>
+$ sudo docker run --rm -it --volume /build/nginx/nginx.conf:/etc/nginx/nginx.conf nginx --help
+docker: Error response from daemon: OCI runtime create failed: container_linux.go:348: starting container process caused "process_linux.go:402: container init caused \"rootfs_linux.go:58: mounting \\\"/build/nginx/nginx.conf\\\" to rootfs \\\"/var/lib/docker/devicemapper/mnt/2fab14f3dc592d19b1408618a5ba26e88e334d88fe6b7524dc6c30bb0d26bbfc/rootfs\\\" at \\\"/var/lib/docker/devicemapper/mnt/2fab14f3dc592d19b1408618a5ba26e88e334d88fe6b7524dc6c30bb0d26bbfc/rootfs/etc/nginx/nginx.conf\\\" caused \\\"not a directory\\\"\"": unknown: Are you trying to mount a directory onto a file (or vice-versa)? Check if the specified host path exists and is the expected type.
+</code>
+
+Be weary of running docker in docker when you need to bind mount volumes. Prefer a bare metal or VM as a runner.

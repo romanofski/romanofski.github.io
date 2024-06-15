@@ -1,0 +1,9 @@
+---
+title: "GIMP Help Browser Hacking"
+tags: 
+- hacking
+- helpbrowser
+---
+
+<a title="type-ahead search by romanjoost, on Flickr" href="http://www.flickr.com/photos/romanofski/2648757295/"><img style="float:left;margin:0.5em;" src="http://farm4.static.flickr.com/3217/2648757295_6f15224a37_t.jpg" alt="type-ahead search" width="100" height="83" /></a>
+It was a long time in the train yesterday and I started to hack on the help browser dialog. I never thought that it can be so much fun. I even got to some point and added type ahead search. Not a big deal for an experienced C programmer, but a feeling of success for myself. I want to finish that feature (needs some work), though a global search feature would be more helpful for the user :) Well, maybe that's the next thing?

@@ -1,0 +1,14 @@
+---
+title: "Deploying Plone 2 with a ZEO Server"
+tags: 
+- deployment
+- Plone
+---
+
+At <a href="http://www.mooball.com">Mooball</a>, there are still instances running with a <a href="http://plone.org/products/plone/releases/2.0.1">CMFPlone v. 2</a>. Very, very old. Back in the days when Plone v2 was shipped, Python 2.3 was hip and <a href="http://pypi.python.org/pypi/zc.buildout/">zc.buildout</a> was never heard of.
+One motivation I have to deploy with a ZEO is the possibility to pack your database from a simple cron script (which you configure in your buildout too). If you're still one of them who has to deal with these old instances, here is what you do:
+<h4>Use Python 2.3</h4>
+I've always compiled my own python 2.3 to avoid any side effects introduced by python installations from the distribution. Version 1.2.1 of zc.buildout works fine for me, the only missing thing is the subprocess module introduced in python 2.4. To get buildout running, I've copied subprocess.py from python 2.4 into the python 2.3 installation. After that is done, run the bootstrap with (the -v pins the zc.buildout version to 1.2.1):
+<pre>/path/to/python2.3/bin/python bootstrap.py -v1.2.1</pre>
+<h4>Run with zc.buildout</h4>
+I've created a <a href="https://gist.github.com/romanofski/4981531#file-buildout-cfg">sample buildout.cfg</a> and put it up on gist. The important part is the 'fixup' which simply comments out 3 keys in the generated config files, which are not supported by the Zope/ZEO version. Depending how much time you have available, play with the options to pin eggs instead of dropping the whole <a href="http://plone.org/products/plone/releases/2.0.1">CMFPlone tarball</a> in the products directory. Running the buildout from the products directory is the quickest way tho.

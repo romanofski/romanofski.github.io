@@ -1,0 +1,11 @@
+---
+title: "Something for Blinkenlights?"
+tags: 
+---
+
+<p>
+Just saw this post on <a href="http://infosthetics.com/archives/2008/05/zero_energy_massive_led_display.html">information aesthetics</a>. Would be awesome to play pong on this via <a href="http://blinkenlights.de">blinkenlights</a> *G
+</p><div><p><img alt="greenpix.jpg" src="http://infosthetics.com/archives/greenpix.jpg" height="200" width="400" />
+</p><blockquote>
+The largest color LED display worldwide, &amp; the first photo-voltaic system integrated into a glass curtain wall in China. the display requires zero external energy, as the facade harvests solar energy by day &amp; uses it to illuminate the screen after dark. [...] You can <a href="http://www.greenpix.org/play.php">play</a> with the online simulator, or watch a movie after the <a href="http://infosthetics.com/archives/2008/05/zero_energy_massive_led_display.html#extended">break</a>.<img src="http://feeds.infosthetics.com/%7Er/infosthetics/%7E4/286487991" height="1" width="1" />
+</blockquote></div><div class="flockcredit" style="text-align:right;color:#CCC;font-size:x-small;">Blogged with the <a href="http://www.flock.com/blogged-with-flock" target="_new" title="Flock Browser">Flock Browser</a></div><!-- technorati tags begin --><p style="font-size:10px;text-align:right;">Tags: <a href="http://technorati.com/tag/blinkenlights" rel="tag">blinkenlights</a>, <a href="http://technorati.com/tag/china" rel="tag">china</a>, <a href="http://technorati.com/tag/%20solar" rel="tag"> solar</a>, <a href="http://technorati.com/tag/%20led" rel="tag"> led</a></p><!-- technorati tags end -->

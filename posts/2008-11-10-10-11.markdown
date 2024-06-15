@@ -1,0 +1,13 @@
+---
+title: "Flickering Flash applets in Firefox"
+tags: 
+- Flash
+- Intrepid
+- Lenovo
+- T60
+- Ubuntu
+---
+
+I just upgraded from <a href="http://www.ubuntu.com" target="_self">Ubuntu</a> Hardy to Ubuntu Intrepid. As always - there is something totally wrong going on after an upgrade. My network didn't work anymore (solved, because of openvpn created wrong routes), my sound was flaky because of <a href="http://en.wikipedia.org/wiki/Pulseaudio" target="_self">pulseaudio</a> (just turned it off) and Flash applets in Firefox were flickering.
+
+I solved the latter problem now, by just using the Firefox 3 from Ubuntu. I had a local installed Firefox 3 which was probably older than the version in Ubuntu. That solved the problem and flash applets aren't flickering anymore.

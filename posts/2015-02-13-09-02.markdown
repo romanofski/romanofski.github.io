@@ -1,0 +1,13 @@
+---
+title: "Why wrapper scripts can suck"
+tags: 
+---
+
+Wrapper scripts can sometimes be the way to go if you're doing the same things all over again: you bump a release version, roll out the archive and tie it up in a package. Since even this is an unacceptable form of manual labour, we write our own script, which does all of this above and call it make-release-2000-ng
+<ul>
+	<li>obscure the process</li>
+	<li>they don't document the process</li>
+	<li>documentation is cheaper</li>
+	<li>obscure specific process points</li>
+	<li>usually buggy</li>
+</ul>

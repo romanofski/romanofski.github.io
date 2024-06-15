@@ -1,0 +1,30 @@
+---
+title: "git: rework a commited patch"
+tags: 
+- best practice
+---
+
+Since I'm working with <a title="Gerrit Code Review" href="https://code.google.com/p/gerrit/">gerrit</a> and following a few best practices from colleagues. Here is one I found very helpful.
+
+<img class="aligncenter" alt="" src="https://farm3.staticflickr.com/2423/3983474114_a61b8d2b9b_n.jpg" width="320" height="213" />
+<h3>Motivation</h3>
+A bad commit can happen from time to time, which perhaps addresses only partially a problem. Best practice is to revert the commit, rework it until it fixes the problem. Why? That way you can grab the "right" patch which fixes the specific problem instead of searching for multiple patches and fix of fixes.
+<h3>How you do it</h3>
+<ol>
+	<li>Create a branch with bad commit on top (a0eae90 is the SHA of the bad commit):
+<pre># puts you in detached head state with a0eae90b45f9b94c3f0742df627eefd864c089c8 at the top
+git checkout a0eae90b45f9b94c3f0742df627eefd864c089c8
+# checkout new branch with the name fixup/bug_2312312 in order to work on it.
+git checkout -b fixup/bug_2312312</pre>
+</li>
+	<li>Revert the patch (HEAD~1 == a0eae90):
+<pre>git revert a0eae90b45f9b94c3f0742df627eefd864c089c8</pre>
+</li>
+	<li>Cherry pick the "bad" commit:
+<pre>git cherry-pick a0eae90b45f9b94c3f0742df627eefd864c089c8</pre>
+</li>
+	<li>Unstage the cherry picked commit to work on the patch:
+<pre> git reset HEAD~1</pre>
+</li>
+</ol>
+Kudos to <a href="http://simonbaird.com/">Simon Baird</a> and <a href="http://who-t.blogspot.com.au/">Peter Hutterer</a> for their help on this.

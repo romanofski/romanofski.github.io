@@ -1,0 +1,14 @@
+---
+title: "No such file or directory FakePlugin.egg-info"
+tags: 
+- Plone
+- python
+---
+
+In case you run into a similar issue which ends up in a traceback like this:
+<pre>ZopeXMLConfigurationError: File "/opt/works/projects/plone4/nuw.types/nuw/types/configure.zcml", line 12.2-12.37
+ZopeXMLConfigurationError: File "/home/roman/.buildout/eggs/mooball.plone.activecampaign-0.2-py2.7.egg/mooball/plone/activecampaign/configure.zcml", line 10.2-10.37
+OSError: [Errno 2] No such file or directory: '/home/roman/tools/python2.7/lib/python2.7/site-packages/tests/fake_packages/FakePlugin.egg/FakePlugin.egg-info'</pre>
+you might have made the same mistake then I did: install ZopeSkel in your (system-) python installation. Never do this. <a title="Using paster local commands with buildout and avoiding the infamous dependency issue" href="http://opensourcehacker.com/2010/04/13/using-paster-create-command-with-buildout-and-avoiding-the-infamous-dependency-issue/">Mikko explains on his blog why</a>.
+
+So, check your python installation and <strong>uninstall/remove the PasteScript.</strong>

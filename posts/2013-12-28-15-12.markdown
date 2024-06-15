@@ -1,0 +1,30 @@
+---
+title: "Why review sites are bad for decision making"
+tags: 
+---
+
+We were just on the lookout for a new washing machine after ours died a few weeks ago. I've finished a course on edx about Behaviour Economics. What does have the  former to do with the latter?
+
+The problem with review sites is:
+<ul>
+	<li>you never know how big the sample size is: how many good/bad reviews come on how many sold items</li>
+	<li>reviews can be very irrational: sometimes people totally miss the point of their review and review more than they should do</li>
+	<li>reviews can be very noisy: this is is almost a duplicate of my former point, but goes into a different direction</li>
+	<li>reviews depend on time: no reviewer is telling you that his washing is still holding up.</li>
+	<li>some sites look as if they give expert advise, but they aren't. Perhaps Stackoverflow comes very close to a valuable input.</li>
+</ul>
+So here is what Behavioural Economics teach us:
+<ul>
+	<li>be aware that you most likely are not able to make a rational choice. Without going in too much depth what BE defines, one aspect of making a perfectly rational choice is <strong>completeness of information</strong>. That means, in terms of the product, you need how many goods were sold and which ones were faulty. How are you going to use the product over time. How reliable are the parts? How may your future use change? etc.</li>
+</ul>
+What do we do to make a better choice?
+<ul>
+	<li>Be aware that your decision will be flawed no matter what.</li>
+	<li>Get es much information about the topic/product from independent sources as possible. That allows to eliminate key aspect you need and don't need.</li>
+	<li>Ask as many experts on a topic/product as possible. Better: ask people with a different set of information on the topic.</li>
+	<li>If you can't ask experts, ask you friends with the same principle: allow them to gather their own information.</li>
+	<li>Don't treat review sites as expert advise, but keep it as a decision factor equal to all others.</li>
+</ul>
+References:
+
+http://en.wikipedia.org/wiki/Rational_choice_theory

@@ -1,0 +1,21 @@
+---
+title: "Plone Attribute Error DirContainedFileResource"
+tags: 
+- Plone
+---
+
+This is a short one.
+
+In case you're running in an error on your Plone site which looks similar to this:
+<pre>File "[...]/eggs/Products.ResourceRegistries-2.0.3-py2.6.egg/Products/ResourceRegistries/browser/scripts.py", line 27, in scripts
+ content = registry.getInlineResource(script.getId(), context)
+ File "[...]/eggs/Products.ResourceRegistries-2.0.3-py2.6.egg/Products/ResourceRegistries/tools/BaseRegistry.py", line 840, in getInlineResource
+ output = self.getResourceContent(item, context)
+ File "[...]/eggs/Products.ResourceRegistries-2.0.3-py2.6.egg/Products/ResourceRegistries/tools/JSRegistry.py", line 246, in getResourceContent
+ output = BaseRegistryTool.getResourceContent(self, item, context, original)
+ File "[...]/eggs/Products.ResourceRegistries-2.0.3-py2.6.egg/Products/ResourceRegistries/tools/BaseRegistry.py", line 589, in getResourceContent
+ method = obj.browserDefault(self.REQUEST)[0].__name__
+ File "[...]/eggs/zope.browserresource-3.10.3-py2.6.egg/zope/browserresource/file.py", line 94, in browserDefault
+ return getattr(self, request.method), ()
+ AttributeError: 'DirContainedFileResource7' object has no attribute 'POST'</pre>
+Check if some of your javascripts have inline rendering enabled and obviously disable it. This seems to be more like a work around rather than a fix. Haven't had time to investigate what was really going wrong there. Any additional pointers welcome!

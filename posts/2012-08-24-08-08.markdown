@@ -1,0 +1,15 @@
+---
+title: "Facts and falacies"
+tags: 
+---
+
+Our goal should be to write as little code as possible
+No software project is too big to fail
+X years of X technology doesn't mean you're experienced in it
+Just because you have more knowledge online of X doesn't mean you have experience and judgement
+Copy and paste leads to horrible software architecture
+Improving the code of a stuffed up component takes much longer than it took to implement
+Read the source Luke
+We underestimate maintenance of software
+Code readability trumps a lot, but is no excuse for better routines
+Don't make things work: it means you lack the background knowledge

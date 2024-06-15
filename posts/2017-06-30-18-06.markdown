@@ -1,0 +1,8 @@
+---
+title: "mod_auth_kerb: Problems with negotiation on Apple Macs (or BSDs)?"
+tags: 
+---
+
+Recently I've spend quite some time debugging a problem which surfaced as the inability for users of Apple notebooks to always be prompted for login , even though the client should have negotiated and logged into the web application automatically. At first hand, it seems like it is a DNS issue, since it happens with web applications deployed on hosts using a CNAME alias. On further investigation it turns out it is a mis-configuration on mod_auth_kerb setting the wrong <code>KrbServicename</code>.
+<h3><strong>The problem</strong></h3>
+If you try to use negotiate on Mac, it fails to establish a security context. Here is an example curl output sending the token:

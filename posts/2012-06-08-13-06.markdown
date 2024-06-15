@@ -1,0 +1,14 @@
+---
+title: "Thank you"
+tags: 
+---
+
+you are expected to restore xen shit, debug issues with database, set up servers, set up 
+                    dns, customer support, write client documentation, edit images, manage time sheets, code 
+                    websites, deploy websites, support legacy applications
+
+ and its too much to ask an admin to restore a website
+or even stop and start a zope instance
+you are expected all of that and tom can't turn a viewlet off
+
+suggesting a fulltext search for Kitovu after 1 1/2 of development vs. font-size problems which are labeled as obvious

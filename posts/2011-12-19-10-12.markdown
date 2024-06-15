@@ -1,0 +1,28 @@
+---
+title: "AttributeError when Installing Custom Theme Package"
+tags: 
+- Plone
+---
+
+If you're creating a new Plone theme package based on plone.app.theming and run into the following error:
+<code></code>
+<pre>Traceback (innermost last):
+  Module ZPublisher.Publish, line 126, in publish
+  Module ZPublisher.mapply, line 77, in mapply
+  Module ZPublisher.Publish, line 46, in call_object
+  Module Products.CMFQuickInstallerTool.QuickInstallerTool, line 575, in installProducts
+  Module Products.CMFQuickInstallerTool.QuickInstallerTool, line 512, in installProduct
+   - __traceback_info__: ('my.skin',)
+  Module Products.GenericSetup.tool, line 323, in runAllImportStepsFromProfile
+   - __traceback_info__: profile-my.skin:default
+  Module Products.GenericSetup.tool, line 1080, in _runImportStepsFromContext
+  Module Products.GenericSetup.tool, line 994, in _doRunImportStep
+   - __traceback_info__: plone.app.theming
+  Module plone.app.theming.exportimport.handler, line 40, in importTheme
+  Module plone.app.theming.utils, line 427, in applyTheme
+  Module plone.registry.recordsproxy, line 43, in __setattr__
+AttributeError: currentTheme</pre>
+This will probably have nothing to do with a wrong setup in your theme, but simply a dependency issue to diazo.
+<strong> Just make sure you install "Diazo theme support" before your theme is installed.</strong>
+
+Reference: http://plone.293351.n2.nabble.com/plone-app-theming-1-0b5-and-Plone-4-1rc2-Plone-4106-td6418670.html
