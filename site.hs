@@ -8,7 +8,7 @@ import           Hakyll
 config :: Configuration
 config = defaultConfiguration
   {
-    destinationDirectory = "docs"
+    destinationDirectory = "_site"
   }
 
 postContextWithTags :: Tags -> Context String
