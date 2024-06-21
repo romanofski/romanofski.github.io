@@ -9,7 +9,6 @@ body {
 }
 
 header {
-  border-bottom: 0.2rem solid #000;
   height: 240px;
 }
 
@@ -28,11 +27,12 @@ main {
 
 nav {
     background-color: #cf000f;
-  text-align: right;
+  text-align: left;
   margin: 0;
 }
 nav ul {
     list-style: none;
+    padding: 0;
 }
 
 a {
@@ -46,6 +46,12 @@ nav a {
   text-transform: uppercase;
   display: block;
   color: #fff;
+  padding: 10px 20px;
+}
+
+nav a:hover {
+    background-color: #a00101;
+    color: #fff;
 }
 
 footer {
@@ -136,10 +142,6 @@ article .header {
   .logo a {
     font-size: 2.4rem;
   }
-  nav a {
-    display: inline;
-    margin: 0 0.6rem;
-  }
 }
 
 @media (min-width: 640px) {
@@ -164,10 +166,6 @@ article .header {
   nav {
     margin: 0;
     text-align: right;
-  }
-  nav a {
-    margin: 0 0 0 1.2rem;
-    display: inline;
   }
   footer {
     text-align: right;

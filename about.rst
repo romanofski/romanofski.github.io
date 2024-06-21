@@ -3,7 +3,7 @@ title: About
 ---
 Roman Joost grew up in Germany and graduated with a
 Diplom-Informatiker (FH) degree from the University of Applied
-Sciences in Koethen (Anhalt). Professionally Roman worked for Zope
+Sciences in Köthen (Anhalt). Professionally Roman worked for Zope
 companies such as gocept GmbH & Co. KG and Infrae. He had influence in
 UI design for each project, as well as programming components in
 Python for Plone, Silva or Zope3 (Bluebream) based systems.
