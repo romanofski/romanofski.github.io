@@ -1,11 +1,11 @@
 html {
-  font-size: 62.5%;
-  font-family: "Arimo", sans-serif;
+    font-size: 62.5%;
+    font-family: "Arimo", sans-serif;
 }
 
 body {
-  font-size: 1.6rem;
-  color: #000;
+    font-size: 1.6rem;
+    color: #000;
 }
 
 header .Widget {
@@ -28,7 +28,7 @@ header .Widget h1 {
 }
 #header-image {
     height: 240px;
-  background-color: #cf000f;
+    background-color: #cf000f;
 }
 
 main {
@@ -37,8 +37,8 @@ main {
 
 nav {
     background-color: #cf000f;
-  text-align: left;
-  margin: 0;
+    text-align: left;
+    margin: 0;
 }
 nav ul {
     list-style: none;
@@ -50,13 +50,13 @@ a {
     text-decoration: none;
 }
 nav a {
-  font-size: 1.8rem;
-  font-weight: bold;
-  text-decoration: none;
-  text-transform: uppercase;
-  display: block;
-  color: #fff;
-  padding: 10px 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    color: #fff;
+    padding: 10px 20px;
 }
 
 nav a:hover {
@@ -66,12 +66,12 @@ nav a:hover {
 
 footer {
     margin-bottom: 1em;
-  font-size: 1rem;
-  color: #555;
+    font-size: 1rem;
+    color: #555;
 }
 
 h1 {
-  font-size: 4.4rem;
+    font-size: 4.4rem;
 }
 
 h1.siteTitle {
@@ -80,7 +80,7 @@ h1.siteTitle {
 }
 
 h2 {
-  font-size: 3rem;
+    font-size: 3rem;
 }
 
 h3 {
@@ -92,9 +92,9 @@ section {
 }
 
 article .header {
-  font-size: 1.4rem;
-  font-style: italic;
-  color: #555;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #555;
 }
 
 article {
@@ -103,101 +103,101 @@ article {
 }
 
 .logo a {
-  font-weight: bold;
-  color: #000;
-  text-decoration: none;
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
 }
 
 
 @media (max-width: 319px) {
-  body {
-    width: 90%;
-    margin: 0;
-    padding: 0 5%;
-  }
-  header {
-    margin: 4.2rem 0;
-  }
-  .siteBranding {
-      padding: 20px 40px;
-  }
-  nav {
-    margin: 0 auto 3rem;
-    text-align: center;
-  }
-  footer {
-    text-align: center;
-  }
-  .logo {
-    text-align: center;
-    margin: 1rem auto 3rem;
-  }
-  .logo a {
-    font-size: 2.4rem;
-  }
-  nav a {
-    display: block;
-    line-height: 1.6;
-  }
+    body {
+        width: 90%;
+        margin: 0;
+        padding: 0 5%;
+    }
+    header {
+        margin: 4.2rem 0;
+    }
+    .siteBranding {
+        padding: 20px 40px;
+    }
+    nav {
+        margin: 0 auto 3rem;
+        text-align: center;
+    }
+    footer {
+        text-align: center;
+    }
+    .logo {
+        text-align: center;
+        margin: 1rem auto 3rem;
+    }
+    .logo a {
+        font-size: 2.4rem;
+    }
+    nav a {
+        display: block;
+        line-height: 1.6;
+    }
 }
 
 @media (min-width: 320px) {
-  body {
-    width: 90%;
-    margin: 0;
-    padding: 0 5%;
-  }
-  header {
-    margin: 4.2rem 0;
-  }
-  nav {
-    margin: 0 auto 3rem;
-    text-align: center;
-  }
-  footer {
-    text-align: center;
-  }
-  .logo {
-    text-align: center;
-    margin: 1rem auto 3rem;
-  }
-  .logo a {
-    font-size: 2.4rem;
-  }
+    body {
+        width: 90%;
+        margin: 0;
+        padding: 0 5%;
+    }
+    header {
+        margin: 4.2rem 0;
+    }
+    nav {
+        margin: 0 auto 3rem;
+        text-align: center;
+    }
+    footer {
+        text-align: center;
+    }
+    .logo {
+        text-align: center;
+        margin: 1rem auto 3rem;
+    }
+    .logo a {
+        font-size: 2.4rem;
+    }
 }
 
 @media (min-width: 640px) {
-  body {
-    width: 70%;
-    margin: 0 auto;
-    padding: 0;
-  }
-  #master-header {
-      width: 25%;
-  }
-  main {
-      width: 75%;
-  }
-  .article {
-      padding: 0 40px 60px;
-  }
-  header {
-    margin: 0 0 3rem;
-    padding: 1.2rem 0;
-  }
-  nav {
-    margin: 0;
-    text-align: right;
-  }
-  footer {
-    text-align: right;
-  }
-  .logo {
-    margin: 0;
-    text-align: left;
-  }
-  .logo a {
-    float: left;
-    font-size: 1.8rem;
-  }
+    body {
+        width: 70%;
+        margin: 0 auto;
+        padding: 0;
+    }
+    #master-header {
+        width: 25%;
+    }
+    main {
+        width: 75%;
+    }
+    .article {
+        padding: 0 40px 60px;
+    }
+    header {
+        margin: 0 0 3rem;
+        padding: 1.2rem 0;
+    }
+    nav {
+        margin: 0;
+        text-align: right;
+    }
+    footer {
+        text-align: right;
+    }
+    .logo {
+        margin: 0;
+        text-align: left;
+    }
+    .logo a {
+        float: left;
+        font-size: 1.8rem;
+    }
 }
