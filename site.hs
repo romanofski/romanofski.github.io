@@ -5,15 +5,6 @@ import           Hakyll
 
 
 --------------------------------------------------------------------------------
-config :: Configuration
-config = defaultConfiguration
-  {
-    destinationDirectory = "_site"
-  }
-
-postContextWithTags :: Tags -> Context String
-postContextWithTags tags = tagsField "tags" tags `mappend` postCtx
-
 main :: IO ()
 main = hakyllWith config $ do
     match "images/*" $ do
@@ -35,6 +26,7 @@ main = hakyllWith config $ do
         route $ setExtension "html"
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/post.html"    (postContextWithTags tags)
+            >>= saveSnapshot "content"
             >>= loadAndApplyTemplate "templates/default.html" (postContextWithTags tags)
             >>= relativizeUrls
 
@@ -70,20 +62,27 @@ main = hakyllWith config $ do
     match "index.html" $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    defaultContext
+            posts <- fmap (take 2) . recentFirst =<< loadAllSnapshots "posts/*" "content"
+            let context = listField "posts" (postContextWithTags tags) (pure posts) `mappend` defaultContext
 
             getResourceBody
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                >>= applyAsTemplate context
+                >>= loadAndApplyTemplate "templates/default.html" context
                 >>= relativizeUrls
 
     match "templates/*" $ compile templateBodyCompiler
 
 
 --------------------------------------------------------------------------------
+config :: Configuration
+config = defaultConfiguration
+  {
+    destinationDirectory = "_site"
+  }
+
+postContextWithTags :: Tags -> Context String
+postContextWithTags tags = tagsField "tags" tags `mappend` postCtx
+
 postCtx :: Context String
 postCtx =
     dateField "date" "%B %e, %Y" `mappend`

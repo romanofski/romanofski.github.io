@@ -1,16 +1,9 @@
----
-title: Home
----
-<h2>Blog</h2>
 <p>
-    Sometimes I write things on this website.  Here are some of the more
-    interesting ones:
+  $for(posts)$
+  <article>
+    <section>
+      $body$
+    </section>
+  </article>
+  $endfor$
 </p>
-<ul>
-    $for(posts)$
-    <li>
-        “<a href="$url$">$title$</a>”
-        ‒ <span class="soft">$date$</span><br />
-    </li>
-    $endfor$
-</ul>
