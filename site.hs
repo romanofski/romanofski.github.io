@@ -59,6 +59,14 @@ main = hakyllWith config $ do
                 >>= loadAndApplyTemplate "templates/default.html" ctx
                 >>= relativizeUrls
 
+    create ["atom.xml"] $ do
+        route idRoute
+        compile $ do
+            let feedCtx = postCtx `mappend` bodyField "description"
+            posts <- fmap (take 10) . recentFirst =<<
+                loadAllSnapshots "posts/*" "content"
+            renderAtom feedConfiguration feedCtx posts
+
     match "index.html" $ do
         route idRoute
         compile $ do
@@ -74,6 +82,16 @@ main = hakyllWith config $ do
 
 
 --------------------------------------------------------------------------------
+feedConfiguration :: FeedConfiguration
+feedConfiguration = FeedConfiguration
+  {
+    feedTitle = "Romanofskis Blog"
+  , feedDescription = "Random solutions to software engineering problems"
+  , feedAuthorName = "Róman Joost"
+  , feedAuthorEmail = ""
+  , feedRoot = "https://www.romanofski.de"
+  }
+
 config :: Configuration
 config = defaultConfiguration
   {
