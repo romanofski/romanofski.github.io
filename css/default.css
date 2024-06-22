@@ -65,10 +65,8 @@ nav a:hover {
 }
 
 footer {
-  margin-top: 3rem;
-  padding: 1.2rem 0;
-  border-top: 0.2rem solid #000;
-  font-size: 1.2rem;
+    margin-bottom: 1em;
+  font-size: 1rem;
   color: #555;
 }
 
